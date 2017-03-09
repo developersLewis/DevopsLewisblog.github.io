@@ -87,16 +87,25 @@
 
 
 
-<meta name="description" content="Lewis&apos;s Blog">
+<meta name="description" content="LAMP(LINUX APACHE MYSQL PHP)版本选择须知php 5.5 开始就不支持windows2003了;PHP5.5 不支持apache2.2了
+换句话说，根据php5_module模块，可以知道当前版本php支持哪种Apache
+所以,Apache/PHP的搭配有以下几种情况:
+1.php5.2支持Apache2.0和Apache2.2;2.php5.3、php5.4同时支持A">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LAMP架构(1)编译安装">
 <meta property="og:url" content="http://developersLewis.github.io/2017/03/09/LAMP架构-1-编译安装/index.html">
 <meta property="og:site_name" content="Lewis's Home">
-<meta property="og:description" content="Lewis&apos;s Blog">
-<meta property="og:updated_time" content="2017-03-09T05:22:07.000Z">
+<meta property="og:description" content="LAMP(LINUX APACHE MYSQL PHP)版本选择须知php 5.5 开始就不支持windows2003了;PHP5.5 不支持apache2.2了
+换句话说，根据php5_module模块，可以知道当前版本php支持哪种Apache
+所以,Apache/PHP的搭配有以下几种情况:
+1.php5.2支持Apache2.0和Apache2.2;2.php5.3、php5.4同时支持A">
+<meta property="og:updated_time" content="2017-03-09T06:25:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LAMP架构(1)编译安装">
-<meta name="twitter:description" content="Lewis&apos;s Blog">
+<meta name="twitter:description" content="LAMP(LINUX APACHE MYSQL PHP)版本选择须知php 5.5 开始就不支持windows2003了;PHP5.5 不支持apache2.2了
+换句话说，根据php5_module模块，可以知道当前版本php支持哪种Apache
+所以,Apache/PHP的搭配有以下几种情况:
+1.php5.2支持Apache2.0和Apache2.2;2.php5.3、php5.4同时支持A">
 
 
 
@@ -296,6 +305,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Apache文档总结/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache文档总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -321,7 +352,29 @@
       
 
       
-        
+        <p>LAMP(LINUX APACHE MYSQL PHP)版本选择须知<br>php 5.5 开始就不支持windows2003了;<br>PHP5.5 不支持apache2.2了</p>
+<p>换句话说，根据php5_module模块，可以知道当前版本php支持哪种Apache</p>
+<p>所以,Apache/PHP的搭配有以下几种情况:</p>
+<p>1.php5.2支持Apache2.0和Apache2.2;<br>2.php5.3、php5.4同时支持Apache2.2和Apache2.4;<br>3.php5.5只支持Apache2.4;除非你自己手动编译php5_module模块,否则只能有以上3种选择;</p>
+<p>此篇文章选择的是:Centos 6.x + Apache2.2 + php 4.x + Mysql5.1 GLIBC </p>
+<p>一、下载相应包</p>
+<p>web服务器方面我喜欢选择搜狐源：mirrors.sohu.com</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wget -cP /usr/local/src/ http://mirrors.sohu.com/apache/httpd-2.2.32.tar.gz #下载Apache2.2源码包</div><div class="line"> </div><div class="line">wget -cP /usrl/local/src/ http://mirrors.sohu.com/php/php-5.4.22.tar.gz #下载php5.4源码包</div><div class="line"> </div><div class="line">wget -cP /usr/local/src/ http://mirrors.sohu.com/mysql/MySQL-5.1/mysql-5.1.72-linux-x86_64-glibc23.tar.gz </div><div class="line">#下载Mysql5.1 GLIBC二进制包</div></pre></td></tr></table></figure>
+<p>二、解压下载的包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/ #切换到指定下载目录</div><div class="line"> </div><div class="line">tar -xzvf httpd-2.2.32.tar.gz #解压Apache包</div><div class="line"> </div><div class="line">tar -xzvf php-5.4.22.tar.gz #解压php包</div><div class="line"> </div><div class="line">tar -xzvf mysql-5.1.72-linux-x86_64-glibc23.tar.gz #解压mysql包</div></pre></td></tr></table></figure></p>
+<p>三、解决编译缺少的库文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">yum -y install epel-release #安装epel扩展源</div><div class="line"> </div><div class="line">yum -y groupinstall &quot;Development tools&quot; #安装开发工具组包</div><div class="line"> </div><div class="line">yum install -y zlib-devel pcre pcre-devel apr apr-devel libxml2-devel openssl openssl-devel bzip2 bzip2-devel libpng libpng-devel freetype freetype-devel libmcrypt-devel libjpeg-devel #解决可能缺少的库文件</div></pre></td></tr></table></figure></p>
+<p>四、Mysql安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/ #切换到指定下载目录</div><div class="line"> </div><div class="line">mv mysql-5.1.72-linux-x86_64-glibc23 /usr/local/mysql #把解压完的数据移动到/usr/local/mysql</div><div class="line"> </div><div class="line">useradd -s /sbin/nologin mysql #创建mysql用户</div><div class="line"> </div><div class="line">useradd -s /sbin/nologin www #创建Apache用户</div><div class="line"> </div><div class="line">useradd -s /sbin/nologin php-fpm #创建php用户</div><div class="line"> </div><div class="line">mkdir -p /data/mysql ; chown -R mysql:mysql /data/mysql #创建数据目录 并改变属主属组为mysql</div><div class="line"> </div><div class="line">./scripts/mysql_install_db --user=mysql --datadir=/data/mysql #初始化数据库</div><div class="line"> </div><div class="line">--user 定义数据库的所属主， --datadir 定义数据库安装到哪里，建议放到大空间的分区上，这个目录需要自行创建</div><div class="line"> </div><div class="line">cp support-files/my-large.cnf /etc/my.cnf #拷贝配置文件</div><div class="line"> </div><div class="line">cp support-files/mysql.server  /etc/init.d/mysqld #拷贝启动脚本文件</div><div class="line"> </div><div class="line">chmod 755 /etc/init.d/mysqld #修改其属性</div><div class="line"> </div><div class="line">vim /etc/init.d/mysqld #需要修改的地方有 “datadir=/data/mysql” （前面初始化数据库时定义的目录）“basedir=/usr/local/mysql/”</div><div class="line"> </div><div class="line">chkconfig mysqld --add #把启动脚本加入系统服务项</div><div class="line"> </div><div class="line">chkconfig mysqld on #设定开机启动</div><div class="line"> </div><div class="line">service mysqld start  #启动mysql</div><div class="line"> </div><div class="line"> ps aux |grep mysqld #检查mysql是否启动</div></pre></td></tr></table></figure>
+<p>五、Apache编译安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/ #切换到指定下载目录</div><div class="line"> </div><div class="line">cd httpd-2.2.32  #切换到解压目录</div><div class="line"> </div><div class="line">./configure \</div><div class="line">--prefix=/usr/local/apache2 \</div><div class="line">--with-included-apr \</div><div class="line">--enable-so \</div><div class="line">--enable-deflate=shared \</div><div class="line">--enable-expires=shared \</div><div class="line">--enable-rewrite=shared \</div><div class="line">--with-pcre</div><div class="line">#--prefix 指定安装到哪里， --enable-so 表示启用DSO [1] --enable-deflate=shared 表示共享的方式编译deflate</div><div class="line"> </div><div class="line">make &amp;&amp; make install #编译并安装</div></pre></td></tr></table></figure></p>
+<p>六、php编译安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/ #切换到指定下载目录</div><div class="line"> </div><div class="line">cd php-5.4.22 #切换到解压目录</div><div class="line"> </div><div class="line">./configure \</div><div class="line">--prefix=/usr/local/php \</div><div class="line">--with-apxs2=/usr/local/apache2/bin/apxs \</div><div class="line">--with-config-file-path=/usr/local/php/etc  \</div><div class="line">--with-mysql=/usr/local/mysql \</div><div class="line">--with-libxml-dir \</div><div class="line">--with-gd \</div><div class="line">--with-jpeg-dir \</div><div class="line">--with-png-dir \</div><div class="line">--with-freetype-dir \</div><div class="line">--with-iconv-dir \</div><div class="line">--with-zlib-dir \</div><div class="line">--with-bz2 \</div><div class="line">--with-openssl \</div><div class="line">--with-mcrypt \</div><div class="line">--enable-soap \</div><div class="line">--enable-gd-native-ttf \</div><div class="line">--enable-mbstring \</div><div class="line">--enable-sockets \</div><div class="line">--enable-exif \</div><div class="line">--disable-ipv6</div><div class="line">#编译参数</div><div class="line"> </div><div class="line">make &amp;&amp; make install #编译并安装</div><div class="line">cp php.ini-production /usr/local/php/etc/php.ini #拷贝配置文件</div></pre></td></tr></table></figure></p>
+<p>七、Apache结合php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">Apache主配置文件为：/usr/local/apache2/conf/httpd.conf</div><div class="line"> </div><div class="line">vim /usr/local/apache2/conf/httpd.conf</div><div class="line">找到:</div><div class="line">AddType application/x-gzip .gz .tgz</div><div class="line">在该行下面添加:</div><div class="line">AddType application/x-httpd-php .php</div><div class="line">找到:</div><div class="line">&lt;IfModule dir_module&gt;</div><div class="line">    DirectoryIndex index.html</div><div class="line">&lt;/IfModule&gt;</div><div class="line">将该行改为:</div><div class="line">&lt;IfModule dir_module&gt;</div><div class="line">    DirectoryIndex index.html index.htm index.php</div><div class="line">&lt;/IfModule&gt;</div><div class="line">找到:</div><div class="line">#ServerName www.example.com:80</div><div class="line">修改为:</div><div class="line">ServerName localhost:80</div><div class="line">找到 user 改成 www</div><div class="line">找到group 改成 www</div></pre></td></tr></table></figure></p>
+<p>八、测试php解析是否成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/usr/local/apache2/bin/apachectl -t #检验配置文件是否正确</div><div class="line"> 如果是正确的则显示为 “Syntax OK” </div><div class="line">  </div><div class="line">/usr/local/apache2/bin/apachectl start #启动apache</div><div class="line"> </div><div class="line">iptables -F #清除防火墙规则</div><div class="line"> </div><div class="line">vim /usr/local/apache2/htdocs/1.php #新建并编辑文件 将如下内容写进去</div><div class="line">&lt;?php</div><div class="line">    phpinfo();</div><div class="line">?&gt;</div><div class="line">curl localhost/1.php #测试解析 或者直接浏览器访问ip/1.php</div></pre></td></tr></table></figure></p>
+<p>九、Apache开机启动的方法</p>
+<p>将apache添加为开机启动有两个方法：<br>1、在/etc/rc.d/rc.local内加入启动命令 /usr/local/apache2/bin/apachectl  start<br>2、将http添加为系统服务<br>cp /usr/local/apache2/bin/apachectl  /etc/rc.d/init.d/httpd<br>chmod +x  /etc/rc.d/init.d/httpd<br>[root@localhost ~]# chkconfig –add httpd<br>[root@localhost ~]# chkconfig –list|grep httpd<br>httpd           0:关闭 1:关闭  2:关闭 3:关闭  4:关闭  5:关闭  6:关闭<br>[root@localhost ~]# chkconfig –level 345 httpd on<br>[root@localhost ~]# chkconfig –list|grep httpd<br>httpd           0:关闭  1:关闭 2:关闭 3:启用 4:启用 5:启用  6:关闭<br>如果出现[root@localhost ~]# chkconfig –add httpd<br>               httpd 服务不支持 chkconfig<br>解决过程如下：<br>编辑/etc/rc.d/init.d/httpd</p>
+<p>#!/bin/bash</p>
+<p>#chkconfig:345 61 61   //此行的345参数表示,在哪些运行级别启动,启动序号(S61);关闭序号(K61)</p>
+<p>#description:Apache httpd   //此行必写,描述服务.<br>添加红色部分就可以拉！<br>再[root@localhost ~]# chkconfig –add httpd<br>[root@localhost ~]# chkconfig –list|grep httpd<br>httpd           0:关闭 1:关闭  2:关闭 3:关闭  4:关闭  5:关闭  6:关闭<br>[root@localhost ~]# chkconfig –level 345 httpd on<br>[root@localhost ~]# chkconfig –list|grep httpd<br>httpd           0:关闭  1:关闭 2:关闭 3:启用 4:启用 5:启用  6:关闭</p>
+<p>#################################################<br>至此LAMP安装环境就安装完成啦！<br>如果文章有任何问题，任何错误 可以评论我会及时回答并帮助大家.<br>也可以 直接邮箱联系我：devopslewis@outlook.com</p>
+
       
     </div>
 
@@ -412,6 +465,15 @@
             </div>
           
 
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
           
 
           
