@@ -95,7 +95,7 @@
 <meta property="og:description" content="一、Cacti简介Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强">
 <meta property="og:image" content="http://developersLewis.github.io/images/cacti1.png">
 <meta property="og:image" content="http://developersLewis.github.io/images/cacti2.png">
-<meta property="og:updated_time" content="2017-03-09T08:32:36.000Z">
+<meta property="og:updated_time" content="2017-03-09T09:03:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cacti从入门到放弃(1)使用安装详解">
 <meta name="twitter:description" content="一、Cacti简介Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强">
@@ -346,8 +346,17 @@
       
 
       
-        <p>一、Cacti简介<br>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。<br>Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。软件 Cacti 的发展是基于让 RRDTool 使用者更方便使用该软件，除了基本的 Snmp 流量跟系统资讯监控外，Cacti 也可外挂 Scripts 及加上 Templates 来作出各式各样的监控图。<br>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。<br>Mysql配合PHP程序存储一些变量数据并对变量数据进行调用，如：主机名、主机ip、snmp团体名、端口号、模板信息等变量。<br>snmp抓到数据不是存储在mysql中，而是存在rrdtool生成的rrd文件中（在cacti根目录的rra文件夹下）。rrdtool对数据的更新和存储就是对rrd文件的处理，rrd文件是大小固定的档案文件（Round Robin Archive），它能够存储的数据笔数在创建时就已经定义。<br>    二、系统环境<br>        Centos 6.x<br>        nginx 1.4.4<br>        php  5.3.27<br>        mysql 5.1.72<br>    三 、LNMP环境搭建<br>        请见博文:<a href="http://coderleiws.blog.51cto.com/12066224/1900457" target="_blank" rel="external">http://coderleiws.blog.51cto.com/12066224/1900457</a><br>    四、yum安装所需环境<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ntpdate</span> <span class="number">202.120.2.101</span> <span class="comment">#ntp同步时间</span></div><div class="line">   <span class="number">1</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install epel-release  #安装epel扩展源</span></div><div class="line"></div><div class="line">   <span class="number">2</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install  net-snmp  net-snmp-utils  rrdtool  #安装所需环境</span></div></pre></td></tr></table></figure></p>
-<pre><code>五、下载并安装cacti
+        <h1 id="一、Cacti简介"><a href="#一、Cacti简介" class="headerlink" title="一、Cacti简介"></a>一、Cacti简介</h1><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。<br>Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。软件 Cacti 的发展是基于让 RRDTool 使用者更方便使用该软件，除了基本的 Snmp 流量跟系统资讯监控外，Cacti 也可外挂 Scripts 及加上 Templates 来作出各式各样的监控图。<br>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。<br>Mysql配合PHP程序存储一些变量数据并对变量数据进行调用，如：主机名、主机ip、snmp团体名、端口号、模板信息等变量。<br>snmp抓到数据不是存储在mysql中，而是存在rrdtool生成的rrd文件中（在cacti根目录的rra文件夹下）。rrdtool对数据的更新和存储就是对rrd文件的处理，rrd文件是大小固定的档案文件（Round Robin Archive），它能够存储的数据笔数在创建时就已经定义。</p>
+<pre><code>#一、系统环境
+    Centos 6.x
+    nginx 1.4.4
+    php  5.3.27
+    mysql 5.1.72 
+#三 、LNMP环境搭建 
+    请见博文:http://coderleiws.blog.51cto.com/12066224/1900457
+#四、yum安装所需环境
+</code></pre><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ntpdate</span> <span class="number">202.120.2.101</span> <span class="comment">#ntp同步时间</span></div><div class="line">   <span class="number">1</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install epel-release  #安装epel扩展源</span></div><div class="line"></div><div class="line">   <span class="number">2</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install  net-snmp  net-snmp-utils  rrdtool  #安装所需环境</span></div></pre></td></tr></table></figure>
+<pre><code>#五、下载并安装cacti
 Cacti官方地址:http://www.cacti.net/download_cacti.php
 </code></pre><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>.[root<span class="variable">@coderblog</span> ~]<span class="comment"># wget -cP /usr/local/src http://www.cacti.net/downloads/cacti-0.8.8h.tar.gz </span></div><div class="line"><span class="comment">#下载cacti源文件到/usr/local/src/</span></div><div class="line"></div><div class="line"><span class="number">2</span>.[root<span class="variable">@coderblog</span> ~]<span class="comment"># cd /usr/local/src&amp;&amp;tar -xzvf cacti-0.8.8h.tar.gz    #切换到/usr/local/src目录 并且解压缩包</span></div><div class="line"></div><div class="line"><span class="number">3</span>.[root<span class="variable">@coderblog</span> src]<span class="comment"># cp -rf  cacti-0.8.8g /usr/local/nginx/html/cacti  #把源码文件复制到网站根目录</span></div><div class="line"></div><div class="line"><span class="number">4</span>.[root<span class="variable">@coderblog</span> ~]<span class="comment"># /usr/local/mysql/bin/mysql</span></div><div class="line"><span class="comment">#进入mysql交互环境 输入以下命令</span></div><div class="line">)<span class="number">1</span>.create database cacti; <span class="comment">#创建cacti数据库</span></div><div class="line">)<span class="number">2</span>.grant all on cacti.* to <span class="string">'cactiuser'</span>@<span class="string">'localhost'</span> identified by <span class="string">'cactiuser'</span>;</div><div class="line"><span class="comment">#创建cacti用户并赋予cacti库的所有权限</span></div><div class="line">)<span class="number">3</span>.FLUSH PRIVILEGES; <span class="comment">#刷新</span></div><div class="line">)<span class="number">4</span>.quit <span class="comment">#退出mysql交互环境</span></div><div class="line"><span class="number">5</span>.[root<span class="variable">@coderblog</span> ~]<span class="comment"># mysql -uroot cacti &lt; /usr/local/nginx/html/cacti/cacti.sql</span></div><div class="line"><span class="comment">#导入cacti数据库</span></div><div class="line">vim /usr/local/nginx/html/cacti/<span class="keyword">include</span>/config.php  确认如下：</div><div class="line"><span class="variable">$database_type</span> = <span class="string">"mysql"</span>;</div><div class="line"><span class="variable">$database_default</span> = <span class="string">"cacti"</span>;</div><div class="line"><span class="variable">$database_hostname</span> = <span class="string">"127.0.0.1"</span>;</div><div class="line"><span class="variable">$database_username</span> = <span class="string">"cactiuser"</span>;</div><div class="line"><span class="variable">$database_password</span> = <span class="string">"cactiuser"</span>;</div><div class="line"><span class="variable">$database_port</span> = <span class="string">"3306"</span>;</div><div class="line"><span class="variable">$database_ssl</span> = <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
 <ol>
@@ -447,8 +456,17 @@ Cacti官方地址:http://www.cacti.net/download_cacti.php
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -501,6 +519,22 @@ Cacti官方地址:http://www.cacti.net/download_cacti.php
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Cacti简介"><span class="nav-number">1.</span> <span class="nav-text">一、Cacti简介</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
