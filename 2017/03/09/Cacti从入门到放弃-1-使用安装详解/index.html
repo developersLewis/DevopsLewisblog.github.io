@@ -95,7 +95,7 @@
 <meta property="og:description" content="一、Cacti简介Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强">
 <meta property="og:image" content="http://developersLewis.github.io/images/cacti1.png">
 <meta property="og:image" content="http://developersLewis.github.io/images/cacti2.png">
-<meta property="og:updated_time" content="2017-03-10T01:01:02.000Z">
+<meta property="og:updated_time" content="2017-03-10T01:03:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cacti从入门到放弃(1)使用安装详解">
 <meta name="twitter:description" content="一、Cacti简介Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强">
@@ -347,24 +347,20 @@
 
       
         <h1 id="一、Cacti简介"><a href="#一、Cacti简介" class="headerlink" title="一、Cacti简介"></a>一、Cacti简介</h1><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。<br>Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。软件 Cacti 的发展是基于让 RRDTool 使用者更方便使用该软件，除了基本的 Snmp 流量跟系统资讯监控外，Cacti 也可外挂 Scripts 及加上 Templates 来作出各式各样的监控图。<br>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。<br>Mysql配合PHP程序存储一些变量数据并对变量数据进行调用，如：主机名、主机ip、snmp团体名、端口号、模板信息等变量。<br>snmp抓到数据不是存储在mysql中，而是存在rrdtool生成的rrd文件中（在cacti根目录的rra文件夹下）。rrdtool对数据的更新和存储就是对rrd文件的处理，rrd文件是大小固定的档案文件（Round Robin Archive），它能够存储的数据笔数在创建时就已经定义。</p>
-<pre><code># 二、系统环境
-    * Centos 6.x
-    * nginx 1.4.4
-    * php  5.3.27
-    * mysql 5.1.72 
-# 三 、LNMP环境搭建 
-    请见博文:http://coderleiws.blog.51cto.com/12066224/1900457
-# 四、yum安装所需环境
-</code></pre><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ntpdate</span> <span class="number">202.120.2.101</span> <span class="comment">#ntp同步时间</span></div><div class="line">   <span class="number">1</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install epel-release  #安装epel扩展源</span></div><div class="line"></div><div class="line">   <span class="number">2</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install  net-snmp  net-snmp-utils  rrdtool  #安装所需环境</span></div></pre></td></tr></table></figure>
-<pre><code># 五、下载并安装cacti
-</code></pre><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cacti官方地址<span class="symbol">:http</span><span class="symbol">://www</span>.cacti.net/download_cacti.php</div></pre></td></tr></table></figure>
-<p>1.[root@coderblog ~]# wget -cP /usr/local/src <a href="http://www.cacti.net/downloads/cacti-0.8.8h.tar.gz" target="_blank" rel="external">http://www.cacti.net/downloads/cacti-0.8.8h.tar.gz</a> </p>
+<h1 id="二、系统环境"><a href="#二、系统环境" class="headerlink" title="二、系统环境"></a>二、系统环境</h1><pre><code>* Centos 6.x
+* nginx 1.4.4
+* php  5.3.27
+* mysql 5.1.72 
+</code></pre><h1 id="三-、LNMP环境搭建"><a href="#三-、LNMP环境搭建" class="headerlink" title="三 、LNMP环境搭建"></a>三 、LNMP环境搭建</h1><pre><code>请见博文:http://coderleiws.blog.51cto.com/12066224/1900457
+</code></pre><h1 id="四、yum安装所需环境"><a href="#四、yum安装所需环境" class="headerlink" title="四、yum安装所需环境"></a>四、yum安装所需环境</h1><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ntpdate</span> <span class="number">202.120.2.101</span> <span class="comment">#ntp同步时间</span></div><div class="line">   <span class="number">1</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install epel-release  #安装epel扩展源</span></div><div class="line"></div><div class="line">   <span class="number">2</span>. [root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install  net-snmp  net-snmp-utils  rrdtool  #安装所需环境</span></div></pre></td></tr></table></figure>
+<h1 id="五、下载并安装cacti"><a href="#五、下载并安装cacti" class="headerlink" title="五、下载并安装cacti"></a>五、下载并安装cacti</h1><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cacti官方地址<span class="symbol">:http</span><span class="symbol">://www</span>.cacti.net/download_cacti.php</div></pre></td></tr></table></figure>
+<p>[root@coderblog ~]# wget -cP /usr/local/src <a href="http://www.cacti.net/downloads/cacti-0.8.8h.tar.gz" target="_blank" rel="external">http://www.cacti.net/downloads/cacti-0.8.8h.tar.gz</a> </p>
 <p>#下载cacti源文件到/usr/local/src/</p>
-<p>2.[root@coderblog ~]# cd /usr/local/src&amp;&amp;tar -xzvf cacti-0.8.8h.tar.gz    #切换到/usr/local/src目录 并且解压缩包</p>
+<p>[root@coderblog ~]# cd /usr/local/src&amp;&amp;tar -xzvf cacti-0.8.8h.tar.gz    #切换到/usr/local/src目录 并且解压缩包</p>
 <p>3.[root@coderblog src]# cp -rf  cacti-0.8.8g /usr/local/nginx/html/cacti  #把源码文件复制到网站根目录</p>
-<p>4.[root@coderblog ~]# /usr/local/mysql/bin/mysql</p>
-<p>#进入mysql交互环境 输入以下命令<br>)1.create database cacti; #创建cacti数据库<br>)2.grant all on cacti.* to ‘cactiuser’@’localhost’ identified by ‘cactiuser’;</p>
-<p>#创建cacti用户并赋予cacti库的所有权限<br>)3.FLUSH PRIVILEGES; #刷新<br>)4.quit #退出mysql交互环境<br>5.[root@coderblog ~]# mysql -uroot cacti &lt; /usr/local/nginx/html/cacti/cacti.sql</p>
+<p>[root@coderblog ~]# /usr/local/mysql/bin/mysql</p>
+<p>#进入mysql交互环境 输入以下命令<br>create database cacti; #创建cacti数据库<br>grant all on cacti.* to ‘cactiuser’@’localhost’ identified by ‘cactiuser’;</p>
+<p>#创建cacti用户并赋予cacti库的所有权限<br>FLUSH PRIVILEGES; #刷新<br>quit #退出mysql交互环境<br>[root@coderblog ~]# mysql -uroot cacti &lt; /usr/local/nginx/html/cacti/cacti.sql</p>
 <p>#导入cacti数据库<br>vim /usr/local/nginx/html/cacti/include/config.php  确认如下：<br>$database_type = “mysql”;<br>$database_default = “cacti”;<br>$database_hostname = “127.0.0.1”;<br>$database_username = “cactiuser”;<br>$database_password = “cactiuser”;<br>$database_port = “3306”;<br>$database_ssl = false;<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 六、 web访问cacti并安装</span></div><div class="line">http:<span class="regexp">//i</span>p<span class="regexp">/cacti/</span>  </div><div class="line">点两下“<span class="keyword">next</span>” 和一次”Finish“ 即可</div><div class="line">输入admin   admin 登录，重新设置新的密码</div><div class="line"></div><div class="line">执行poller.php, 生成图形， 加入计划任务</div></pre></td></tr></table></figure></p>
 <p>/usr/local/php/bin/php /usr/local/nginx/html/cacti/poller.php<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">会报错 按8.1修改并重启相关服务</div><div class="line">添加cron任务</div><div class="line">cront <span class="_">-e</span>  增加：</div></pre></td></tr></table></figure></p>
 <p><em>/5 </em> <em> </em> *  /usr/local/php/bin/php /usr/share/cacti/poller.php<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"><span class="number">8.1</span> vi /etc/php<span class="selector-class">.ini</span> 修改date<span class="selector-class">.timezone</span> = Asia/Shanghai</div><div class="line"><span class="number">9</span>.配置SNMP文件</div><div class="line"></div><div class="line">vim /etc/snmp/snmpd<span class="selector-class">.conf</span></div><div class="line">找到相似并修改成如下：</div></pre></td></tr></table></figure></p>
@@ -533,7 +529,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Cacti简介"><span class="nav-number">1.</span> <span class="nav-text">一、Cacti简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、设置PATH"><span class="nav-number">2.</span> <span class="nav-text">八、设置PATH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#九、rddtool显示数据成功"><span class="nav-number">3.</span> <span class="nav-text">九、rddtool显示数据成功</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Cacti简介"><span class="nav-number">1.</span> <span class="nav-text">一、Cacti简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、系统环境"><span class="nav-number">2.</span> <span class="nav-text">二、系统环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-、LNMP环境搭建"><span class="nav-number">3.</span> <span class="nav-text">三 、LNMP环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、yum安装所需环境"><span class="nav-number">4.</span> <span class="nav-text">四、yum安装所需环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、下载并安装cacti"><span class="nav-number">5.</span> <span class="nav-text">五、下载并安装cacti</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、设置PATH"><span class="nav-number">6.</span> <span class="nav-text">八、设置PATH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#九、rddtool显示数据成功"><span class="nav-number">7.</span> <span class="nav-text">九、rddtool显示数据成功</span></a></li></ol></div>
             
 
           </div>
