@@ -1,0 +1,714 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、Cacti简介Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cacti从入门到放弃(1)使用安装详解">
+<meta property="og:url" content="http://developersLewis.github.io/2017/03/09/Cacti从入门到放弃-1-使用安装详解/index.html">
+<meta property="og:site_name" content="Lewis's Home">
+<meta property="og:description" content="一、Cacti简介Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强">
+<meta property="og:image" content="http://developersLewis.github.io/images/cacti1.png">
+<meta property="og:image" content="http://developersLewis.github.io/images/cacti2.png">
+<meta property="og:updated_time" content="2017-03-10T01:13:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cacti从入门到放弃(1)使用安装详解">
+<meta name="twitter:description" content="一、Cacti简介Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强">
+<meta name="twitter:image" content="http://developersLewis.github.io/images/cacti1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://developersLewis.github.io/2017/03/09/Cacti从入门到放弃-1-使用安装详解/"/>
+
+
+
+
+
+  <title> Cacti从入门到放弃(1)使用安装详解 | Lewis's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lewis's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">MY NAME IS LEWIS,AND I AM YOUR GOD.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://developersLewis.github.io/2017/03/09/Cacti从入门到放弃-1-使用安装详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lewis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lewis's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Cacti从入门到放弃(1)使用安装详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-09T16:07:10+08:00">
+                2017-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux监控文档/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux监控文档</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、Cacti简介"><a href="#一、Cacti简介" class="headerlink" title="一、Cacti简介"></a>一、Cacti简介</h1><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。<br>Cacti是通过 snmpget来获取数据，使用 RRDtool绘画图形，而且你完全可以不需要了解RRDtool复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。软件 Cacti 的发展是基于让 RRDTool 使用者更方便使用该软件，除了基本的 Snmp 流量跟系统资讯监控外，Cacti 也可外挂 Scripts 及加上 Templates 来作出各式各样的监控图。<br>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。<br>Mysql配合PHP程序存储一些变量数据并对变量数据进行调用，如：主机名、主机ip、snmp团体名、端口号、模板信息等变量。<br>snmp抓到数据不是存储在mysql中，而是存在rrdtool生成的rrd文件中（在cacti根目录的rra文件夹下）。rrdtool对数据的更新和存储就是对rrd文件的处理，rrd文件是大小固定的档案文件（Round Robin Archive），它能够存储的数据笔数在创建时就已经定义。</p>
+<h1 id="二、系统环境"><a href="#二、系统环境" class="headerlink" title="二、系统环境"></a>二、系统环境</h1><ul>
+<li>Centos 6.x</li>
+<li>nginx 1.4.4</li>
+<li>php  5.3.27</li>
+<li>mysql 5.1.72 </li>
+</ul>
+<h1 id="三、LNMP环境搭建"><a href="#三、LNMP环境搭建" class="headerlink" title="三、LNMP环境搭建"></a>三、LNMP环境搭建</h1><p>请见博文:<a href="https://developerslewis.github.io/2017/03/09/LNMP架构-1-编译安装/">LNMP编译安装</a></p>
+<h1 id="四、yum安装所需环境"><a href="#四、yum安装所需环境" class="headerlink" title="四、yum安装所需环境"></a>四、yum安装所需环境</h1><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ntpdate</span> <span class="number">202.120.2.101</span> <span class="comment">#ntp同步时间</span></div><div class="line">[root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install epel-release  #安装epel扩展源</span></div><div class="line"></div><div class="line">[root<span class="variable">@coderblog</span> ~]<span class="comment"># yum -y install  net-snmp  net-snmp-utils  rrdtool  #安装所需环境</span></div></pre></td></tr></table></figure>
+<h1 id="五、下载并安装cacti"><a href="#五、下载并安装cacti" class="headerlink" title="五、下载并安装cacti"></a>五、下载并安装cacti</h1><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cacti官方地址<span class="symbol">:http</span><span class="symbol">://www</span>.cacti.net/download_cacti.php</div></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">[root<span class="variable">@coderblog</span> ~]<span class="comment"># wget -cP /usr/local/src http://www.cacti.net/downloads/cacti-0.8.8h.tar.gz </span></div><div class="line"><span class="comment">#下载cacti源文件到/usr/local/src/</span></div><div class="line"></div><div class="line">[root<span class="variable">@coderblog</span> ~]<span class="comment"># cd /usr/local/src&amp;&amp;tar -xzvf cacti-0.8.8h.tar.gz    #切换到/usr/local/src目录 并且解压缩包</span></div><div class="line"></div><div class="line">[root<span class="variable">@coderblog</span> src]<span class="comment"># cp -rf  cacti-0.8.8g /usr/local/nginx/html/cacti  #把源码文件复制到网站根目录</span></div><div class="line"></div><div class="line">[root<span class="variable">@coderblog</span> ~]<span class="comment"># /usr/local/mysql/bin/mysql</span></div><div class="line"><span class="comment">#进入mysql交互环境 输入以下命令</span></div><div class="line">create database cacti; <span class="comment">#创建cacti数据库</span></div><div class="line">grant all on cacti.* to <span class="string">'cactiuser'</span>@<span class="string">'localhost'</span> identified by <span class="string">'cactiuser'</span>;</div><div class="line"><span class="comment">#创建cacti用户并赋予cacti库的所有权限</span></div><div class="line">FLUSH PRIVILEGES; <span class="comment">#刷新</span></div><div class="line">quit <span class="comment">#退出mysql交互环境</span></div><div class="line">[root<span class="variable">@coderblog</span> ~]<span class="comment"># mysql -uroot cacti &lt; /usr/local/nginx/html/cacti/cacti.sql</span></div><div class="line"><span class="comment">#导入cacti数据库</span></div><div class="line">vim /usr/local/nginx/html/cacti/<span class="keyword">include</span>/config.php  确认如下：</div><div class="line"><span class="variable">$database_type</span> = <span class="string">"mysql"</span>;</div><div class="line"><span class="variable">$database_default</span> = <span class="string">"cacti"</span>;</div><div class="line"><span class="variable">$database_hostname</span> = <span class="string">"127.0.0.1"</span>;</div><div class="line"><span class="variable">$database_username</span> = <span class="string">"cactiuser"</span>;</div><div class="line"><span class="variable">$database_password</span> = <span class="string">"cactiuser"</span>;</div><div class="line"><span class="variable">$database_port</span> = <span class="string">"3306"</span>;</div><div class="line"><span class="variable">$database_ssl</span> = <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
+<h1 id="六、-web访问cacti并安装"><a href="#六、-web访问cacti并安装" class="headerlink" title="六、 web访问cacti并安装"></a>六、 web访问cacti并安装</h1><p><a href="http://ip/cacti/" target="_blank" rel="external">http://ip/cacti/</a><br>点两下“next” 和一次”Finish“ 即可<br>输入admin   admin 登录，重新设置新的密码</p>
+<p>执行poller.php, 生成图形， 加入计划任务<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/usr/</span>local<span class="regexp">/php/</span>bin<span class="regexp">/php /u</span>sr<span class="regexp">/local/</span>nginx<span class="regexp">/html/</span>cacti<span class="regexp">/poller.php</span></div></pre></td></tr></table></figure></p>
+<p>会报错 按8.1修改并重启相关服务<br>添加cron任务<br>cront -e  增加：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*<span class="regexp">/5 * * * *  /u</span>sr<span class="regexp">/local/</span>php<span class="regexp">/bin/</span>php <span class="regexp">/usr/</span>share<span class="regexp">/cacti/</span>poller.php</div></pre></td></tr></table></figure></p>
+<p>8.1 vi /etc/php.ini 修改date.timezone = Asia/Shanghai</p>
+<h1 id="七-配置SNMP文件"><a href="#七-配置SNMP文件" class="headerlink" title="七.配置SNMP文件"></a>七.配置SNMP文件</h1><p>vim /etc/snmp/snmpd.conf<br>找到相似并修改成如下：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">view    systemview    included   <span class="number">.1</span><span class="number">.3</span><span class="number">.6</span><span class="number">.1</span><span class="number">.2</span><span class="number">.1</span></div><div class="line">access  notConfigGroup <span class="string">""</span>      any       noauth    exact  all none none</div><div class="line"><span class="number">1</span></div><div class="line">view all    included  <span class="number">.1</span>                               <span class="number">80</span>  去掉这行的注释</div></pre></td></tr></table></figure></p>
+<h1 id="八、设置PATH"><a href="#八、设置PATH" class="headerlink" title="八、设置PATH"></a>八、设置PATH</h1><p><img src="/images/cacti1.png" alt="Cacti PATH setting"></p>
+<h1 id="九、rddtool显示数据成功"><a href="#九、rddtool显示数据成功" class="headerlink" title="九、rddtool显示数据成功"></a>九、rddtool显示数据成功</h1><p><img src="/images/cacti2.png" alt="rrdtools"><br>至此 cacti简单的安装 就完成了.近期将根据这个博文,出相对的视频.记录自己的学习过程，如有不足，请大家指出</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>有任何问题可以微信或者邮箱(devopslewis@outlook.com)联系我!</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wechat-qcode.jpg" alt="Lewis WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/LNMP架构-1-编译安装/" rel="next" title="LNMP架构(1)编译安装">
+                <i class="fa fa-chevron-left"></i> LNMP架构(1)编译安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/09/LAMP架构-2-MPM工作模式/" rel="prev" title="LAMP架构(2)MPM工作模式">
+                LAMP架构(2)MPM工作模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Lewis" />
+          <p class="site-author-name" itemprop="name">Lewis</p>
+           
+              <p class="site-description motion-element" itemprop="description">devopslewis@outlook.com</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Cacti简介"><span class="nav-number">1.</span> <span class="nav-text">一、Cacti简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、系统环境"><span class="nav-number">2.</span> <span class="nav-text">二、系统环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、LNMP环境搭建"><span class="nav-number">3.</span> <span class="nav-text">三、LNMP环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、yum安装所需环境"><span class="nav-number">4.</span> <span class="nav-text">四、yum安装所需环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、下载并安装cacti"><span class="nav-number">5.</span> <span class="nav-text">五、下载并安装cacti</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、-web访问cacti并安装"><span class="nav-number">6.</span> <span class="nav-text">六、 web访问cacti并安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七-配置SNMP文件"><span class="nav-number">7.</span> <span class="nav-text">七.配置SNMP文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、设置PATH"><span class="nav-number">8.</span> <span class="nav-text">八、设置PATH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#九、rddtool显示数据成功"><span class="nav-number">9.</span> <span class="nav-text">九、rddtool显示数据成功</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lewis</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
