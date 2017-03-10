@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf  ErrorLog “logs/test.com-error_log”    SetEnvIr Request_URI “..gif$” image">
+<meta name="description" content="如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。12345678910[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf  ErrorLog &quot;logs/test.com-error_log&quot;    SetEnvIr Request_URI &quot;.*">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LAMP架构（4）Apache不记录指定类型日志">
 <meta property="og:url" content="http://developersLewis.github.io/2017/03/10/donotrmberlogs/index.html">
 <meta property="og:site_name" content="Lewis's Home">
-<meta property="og:description" content="如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf  ErrorLog “logs/test.com-error_log”    SetEnvIr Request_URI “..gif$” image">
-<meta property="og:updated_time" content="2017-03-10T06:12:29.000Z">
+<meta property="og:description" content="如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。12345678910[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf  ErrorLog &quot;logs/test.com-error_log&quot;    SetEnvIr Request_URI &quot;.*">
+<meta property="og:updated_time" content="2017-03-10T06:14:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LAMP架构（4）Apache不记录指定类型日志">
-<meta name="twitter:description" content="如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf  ErrorLog “logs/test.com-error_log”    SetEnvIr Request_URI “..gif$” image">
+<meta name="twitter:description" content="如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。12345678910[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf  ErrorLog &quot;logs/test.com-error_log&quot;    SetEnvIr Request_URI &quot;.*">
 
 
 
@@ -343,8 +343,9 @@
       
 
       
-        <p> 如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。<br>[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf<br>  ErrorLog “logs/test.com-error_log”<br>    SetEnvIr Request_URI “.<em>.gif$” image-request<br>    SetEnvIf Request_URI “.</em>.jpg$” image-request<br>    SetEnvIf Request_URI “.<em>.png$” image-request<br>    SetEnvIf Request_URI “.</em>.bmp$” image-request<br>    SetEnvIf Request_URI “.<em>.swf$” image-request<br>    SetEnvIf Request_URI “.</em>.js$” image-request<br>    SetEnvIf Request<em>URI “.*.css$” image-request<br>   CustomLog “|/usr/local/apache2/bin/rotatelogs -l /usr/local/apache2/logs/test.com-access</em>%Y%m%d_log 86400” combined env=!image-request</p>
-<p>检查一下是否正常<br>[root@lewis ~]# /usr/local/apache2/bin/apachectl -t<br>Syntax OK<br>重启一下<br>[root@lewis ~]# /usr/local/apache2/bin/apachectl restart</p>
+        <p> 如果一个站点访问量特别大，那么访问日志就会多，有一些日志可以忽略掉，比如图片等，还有js,css等静态对象。<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@lewis logs]# vim /usr/local/apache2/conf/extra/httpd-vhosts.conf</div><div class="line">  ErrorLog <span class="string">"logs/test.com-error_log"</span></div><div class="line">    SetEnvIr Request_URI <span class="string">".*\.gif$"</span> <span class="keyword">image</span>-request</div><div class="line">    SetEnvIf Request_URI <span class="string">".*\.jpg$"</span> <span class="keyword">image</span>-request</div><div class="line">    SetEnvIf Request_URI <span class="string">".*\.png$"</span> <span class="keyword">image</span>-request</div><div class="line">    SetEnvIf Request_URI <span class="string">".*\.bmp$"</span> <span class="keyword">image</span>-request</div><div class="line">    SetEnvIf Request_URI <span class="string">".*\.swf$"</span> <span class="keyword">image</span>-request</div><div class="line">    SetEnvIf Request_URI <span class="string">".*\.js$"</span> <span class="keyword">image</span>-request</div><div class="line">    SetEnvIf Request_URI <span class="string">".*\.css$"</span> <span class="keyword">image</span>-request</div><div class="line">   CustomLog <span class="string">"|/usr/local/apache2/bin/rotatelogs -l /usr/local/apache2/logs/test.com-access_%Y%m%d_log 86400"</span> combined <span class="keyword">env</span>=!<span class="keyword">image</span>-request</div></pre></td></tr></table></figure></p>
+<p>检测配置文件是否正确<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@lewis</span> ~]<span class="meta"># /usr/local/apache2/bin/apachectl -t</span></div><div class="line">Syntax OK</div></pre></td></tr></table></figure></p>
+<p>重启Apache<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@lewis</span> ~]<span class="meta"># /usr/local/apache2/bin/apachectl restart</span></div></pre></td></tr></table></figure></p>
 
       
     </div>
