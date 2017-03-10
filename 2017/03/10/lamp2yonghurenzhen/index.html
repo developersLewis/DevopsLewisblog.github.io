@@ -1,0 +1,700 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="实现用户验证的需求 经常上网的读者会遇到这种情况：访问一些网站的某些资源时，浏览器弹出一个对话框，要求输入用户名和密码来获取对资源的访问。这就是用户认证的一种技术。用户认证是保护网络系统资源的第一道防线，它控制着所有登录并检查访问用户的合法性，其目标是仅 让合法用户以合法的权限访问网络系统的资源。基本的用户认证技术是“用户名＋密码”。
+　  Apache是目前流行的Web服务器，可运行在Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LAMP架构(3)Apache用户认证">
+<meta property="og:url" content="http://developersLewis.github.io/2017/03/10/lamp2yonghurenzhen/index.html">
+<meta property="og:site_name" content="Lewis's Home">
+<meta property="og:description" content="实现用户验证的需求 经常上网的读者会遇到这种情况：访问一些网站的某些资源时，浏览器弹出一个对话框，要求输入用户名和密码来获取对资源的访问。这就是用户认证的一种技术。用户认证是保护网络系统资源的第一道防线，它控制着所有登录并检查访问用户的合法性，其目标是仅 让合法用户以合法的权限访问网络系统的资源。基本的用户认证技术是“用户名＋密码”。
+　  Apache是目前流行的Web服务器，可运行在Linux">
+<meta property="og:updated_time" content="2017-03-10T05:42:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LAMP架构(3)Apache用户认证">
+<meta name="twitter:description" content="实现用户验证的需求 经常上网的读者会遇到这种情况：访问一些网站的某些资源时，浏览器弹出一个对话框，要求输入用户名和密码来获取对资源的访问。这就是用户认证的一种技术。用户认证是保护网络系统资源的第一道防线，它控制着所有登录并检查访问用户的合法性，其目标是仅 让合法用户以合法的权限访问网络系统的资源。基本的用户认证技术是“用户名＋密码”。
+　  Apache是目前流行的Web服务器，可运行在Linux">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://developersLewis.github.io/2017/03/10/lamp2yonghurenzhen/"/>
+
+
+
+
+
+  <title> LAMP架构(3)Apache用户认证 | Lewis's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lewis's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">MY NAME IS LEWIS,AND I AM YOUR GOD.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://developersLewis.github.io/2017/03/10/lamp2yonghurenzhen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lewis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lewis's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                LAMP架构(3)Apache用户认证
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T10:55:51+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Apache文档总结/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache文档总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="实现用户验证的需求"><a href="#实现用户验证的需求" class="headerlink" title="实现用户验证的需求"></a>实现用户验证的需求</h1><p> 经常上网的读者会遇到这种情况：访问一些网站的某些资源时，浏览器弹出一个对话框，要求输入用户名和密码来获取对资源的访问。这就是用户认证的一种技术。用户认证是保护网络系统资源的第一道防线，它控制着所有登录并检查访问用户的合法性，其目标是仅 让合法用户以合法的权限访问网络系统的资源。基本的用户认证技术是“用户名＋密码”。</p>
+<p>　  Apache是目前流行的Web服务器，可运行在Linux、Unix、Windows等操作系统下，它可以很好地解决“用户名＋密码”的认证问题。<br>    apache用户认证所需要的用户名和密码有两种不同的存贮方式：一种是文本文件；另一种是MSQL、Oracle、MySQL等数据库。</p>
+<p>下面以Linux的Apache为例，就这两种存贮方式，分别介绍如何实现用户认证功能。</p>
+<h1 id="一，采用文本文件存储"><a href="#一，采用文本文件存储" class="headerlink" title="一，采用文本文件存储"></a>一，采用文本文件存储</h1><p>　　这种认证方式的基本思想是：Apache启动认证功能后，就可以在需要限制访问的目录下（其对应的子目录也会起作用）建立一个名为.htaccess 的文件，指定认证的配置命令。当用户第一次访问该目录的文件时，浏览器会显示一个对话框，要求输入用户名和密码，进行用户身份的确认。若是合法用户，则显示所访问的页面内容，此后访问该目录的每个页面，浏览器自动送出用户名和密码，不用再输入了，直到关闭浏览器为止。</p>
+<pre><code>以下是实现的具体步骤：
+</code></pre><p>　　    假设Apache已经编译、安装到了/usr/local/apache目录中。缺省情况下，编译Apache时自动加入mod_auth模块，<br>    利用此模块可以实现“用户名+密码”以文本文件为存储方式的认证功能。<br>    （通过下面的命令，可以查看apache是否已经安装指定的模块，/usr/local/apache/bin/apachectl -l ）<br>　　1.修改Apache的配置文件/usr/local/apache/conf/httpd.conf，对认证资源所在的目录设定配置命令。<br>      下例是对/data/home/tenfyguo/proj/soso/htdocs目录的配置，对对应的虚拟机配置增加下面的配置：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">　　＜Directory /data/home/tenfyguo/proj/soso/htdocs＞</div><div class="line">   　　Options Indexes FollowSymLinks </div><div class="line">　　   allowoverride authconfig <span class="comment">#关键是增加这句</span></div><div class="line">　　   <span class="keyword">order</span> <span class="title">allow</span>,<span class="keyword">deny</span> </div><div class="line">　　   allow from all</div><div class="line">　　＜/Directory＞</div></pre></td></tr></table></figure></p>
+<p>　　其中，allowoverride authconfig一行表示允许对/data/home/tenfyguo/proj/soso/htdocs目录下的文件进行用户认证。<br>　　2.在限制访问的目录/data/home/tenfyguo/proj/soso/htdocs下建立一个文件.htaccess （其实是一个隐藏文件），其内容如下：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">　　    AuthName <span class="string">"这里的文字会显示在浏览器弹出的提示登录窗口中"</span> </div><div class="line">　　    AuthType basic </div><div class="line">　　    AuthUserFile <span class="regexp">/data/</span>home<span class="regexp">/tenfyguo/</span>proj<span class="regexp">/soso/</span>valid.txt <span class="comment">#这里放用户名和密码文件，不能放在可以下载的地方</span></div><div class="line">    　　require valid-user</div></pre></td></tr></table></figure></p>
+<p>　　说明：文件.htaccess中常用的配置命令有以下几个：<br>　　1) AuthName命令：指定认证区域名称。区域名称是在提示要求认证的对话框中显示给用户的。<br>　　2) AuthType命令：指定认证类型。在HTTP1.0中，只有一种认证类型：basic。在HTTP1.1中有几种认证类型，如：MD5。<br>　　3) AuthUserFile命令：指定一个包含用户名和密码的文本文件，每行一对。<br>　　4) AuthGroupFile命令：指定包含用户组清单和这些组的成员清单的文本文件。组的成员之间用空格分开，如：<br>　　   managers:user1 user2<br>　　5) require命令：指定哪些用户或组才能被授权访问。如：<br>　　   require user user1 user2(只有用户user1和user2可以访问)<br>　　   requires groups managers (只有组managers中成员可以访问)<br>　　   require valid-user (在AuthUserFile指定的文件中任何用户都可以访问)<br>　　3.利用Apache附带的程序htpasswd，生成包含用户名和密码的文本文件：/data/home/tenfyguo/proj/soso/valid.txt，<br>      每行内容格式为“用户名:密码”。<br>　　  #cd /usr/local/apache/bin<br>　　  #htpasswd -bc /data/home/tenfyguo/proj/soso/valid.txt user1 1234<br>　　  #htpasswd -b /data/home/tenfyguo/proj/soso/valid.txt user2 5678<br>　　  文本文件/data/home/tenfyguo/proj/soso/valid.txt含有两个用户：user1,口令为1234；user2，口令为5678。<br>打开该文本文件可以发现对应的密码已经加密存储<br>      注意，不要将此文本文件存放在Web文档的目录树中，以免被用户下载。<br>　　欲了解htpasswd程序的帮助，请执行htpasswd -h。<br>      完成后，重启apache使得配置生效.<br>      /usr/local/apache/bin/apachectl restart</p>
+<pre><code>当用户第一次打开浏览器请求：http://test.soso.com:13601/test/，此时浏览器会弹出提示框，让用户输入用户名和密码。转包查看apache的响应：
+（1）apache的响应返回：
+</code></pre><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 401 Authorization Required</div><div class="line">Date: Thu, 27 Jan 2011 11:10:07 GMT</div><div class="line">Server: Apache/2.2.4 (Unix)</div><div class="line">WWW-Authenticate: Basic realm="test"</div><div class="line">Content-Length: 401</div><div class="line">Keep-Alive: timeout=5, max=100</div><div class="line">Connection: Keep-Alive</div><div class="line">Content-Type: text/html; charset=iso-8859-1</div><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>401 Authorization Required<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Authorization Required<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>This server could not verify that you</div><div class="line">are authorized to access the document</div><div class="line">requested.  Either you supplied the wrong</div><div class="line">credentials (e.g., bad password), or your</div><div class="line">browser doesn't understand how to supply</div><div class="line">the credentials required.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<pre><code>可以看出，apache的返回的状态码是401, 对应的提示信息：Anthorization Required，并且返回一个很重要的响应头：
+</code></pre><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">WWW</span>-Authenticate: <span class="keyword">Basic </span>realm=<span class="string">"test"</span></div></pre></td></tr></table></figure>
+<pre><code>（2）浏览器弹出提示框让用户输入用户名和密码，输入后浏览器发送如下：
+</code></pre><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">GET <span class="regexp">/test/</span> HTTP/<span class="number">1.1</span></div><div class="line"><span class="string">Host:</span> test.soso.<span class="string">com:</span><span class="number">13601</span></div><div class="line">User-<span class="string">Agent:</span> Mozilla<span class="regexp">/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.13) Gecko/</span><span class="number">20101203</span> Firefox/<span class="number">3.6</span><span class="number">.13</span></div><div class="line"><span class="string">Accept:</span> text<span class="regexp">/html,application/</span>xhtml+xml,application<span class="regexp">/xml;q=0.9,*/</span>*;q=<span class="number">0.8</span></div><div class="line">Accept-<span class="string">Language:</span> zh-cn,zh;q=<span class="number">0.5</span></div><div class="line">Accept-<span class="string">Encoding:</span> gzip,deflate</div><div class="line">Accept-<span class="string">Charset:</span> GB2312,utf<span class="number">-8</span>;q=<span class="number">0.7</span>,*;q=<span class="number">0.7</span></div><div class="line">Keep-<span class="string">Alive:</span> <span class="number">115</span></div><div class="line"><span class="string">Connection:</span> keep-alive</div><div class="line">If-Modified-<span class="string">Since:</span> Fri, <span class="number">12</span> Jun <span class="number">2009</span> <span class="number">03</span>:<span class="number">43</span>:<span class="number">20</span> GMT</div><div class="line"><span class="string">Authorization:</span> Basic dGVuZnlndW86dGVuZnlndW8=</div></pre></td></tr></table></figure>
+<p> 可以看到，此时浏览器发送请求中带上了请求头：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">Authorization</span>: <span class="keyword">Basic </span>dGVuZnlndW86dGVuZnlndW8=</div></pre></td></tr></table></figure></p>
+<p> apache正是利用这个头信息进去权限验证的。</p>
+<p>　　  当用户数量比较少时，这种方法对用户的认证是方便、省事的，维护工作也简单。但是在用户数量有数万人，甚至数十万人时，<br>      会在查找用户上花掉一定时间，从而降低服务器的效率。这种情形，应采用数据库方式。</p>
+<h1 id="二，采用数据库存储"><a href="#二，采用数据库存储" class="headerlink" title="二，采用数据库存储"></a>二，采用数据库存储</h1><p>　　 目前，Apache、PHP、MySQL三者是Linux下构建Web网站的最佳搭档，这三个软件都是免费软件。将三者结合起来，通过HTTP协议， 利用PHP和MySQL，实现Apache的用户认证功能。<br>　　 只有在PHP以Apache的模块方式来运行的时候才能进行用户认证。为此，在编译Apache时需要加入PHP模块一起编译。假设PHP作为Apache的模块，编译、安装Apache到/usr/local/apache目录，编译、 安装MySQL到/usr/local/mysql目录。然后进行下面的步骤：<br>　　1.在MySQL中建立一个数据库member，在其中建立一个表users，用来存放合法用户的用户名和密码。<br>　　1)用vi命令在/tmp目录建立一个SQL脚本文件auth.sql，内容为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">drop</span> datebase <span class="keyword">if</span> <span class="keyword">exists</span> <span class="keyword">member</span>;</div><div class="line">　　<span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">member</span>;</div><div class="line">　　<span class="keyword">use</span> <span class="keyword">member</span>;</div><div class="line">　　<span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">users</span> (</div><div class="line">　　   username <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">　　   <span class="keyword">password</span> <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">　　);</div><div class="line">　　<span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">users</span> <span class="keyword">values</span>(<span class="string">"user1"</span>,<span class="keyword">password</span>(<span class="string">"1234"</span>));</div><div class="line">　　<span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">users</span> <span class="keyword">values</span>(<span class="string">"user2"</span>,<span class="keyword">password</span>(<span class="string">"5678"</span>));</div></pre></td></tr></table></figure></p>
+<p>　　2)启动MySQL客户程序mysql，执行上述SQL脚本文件auth.sql的命令，在表users中增加两个用户的记录。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="selector-id">#mysql</span> -u root -pmypwd ＜ /tmp/auth.sql</div></pre></td></tr></table></figure></p>
+<p>　　2.编写一个PHP脚本头文件auth.inc，程序内容为：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"> <span class="comment">/*</span></div><div class="line"> “PHP_AUTH_USER”</div><div class="line"> 当 PHP 运行在 Apache 模块方式下，并且正在使用 HTTP 认证功能，这个变量便是用户输入的用户名。 </div><div class="line"> “PHP_AUTH_PW”</div><div class="line"> 当 PHP 运行在 Apache 模块方式下，并且正在使用 HTTP 认证功能，这个变量便是用户输入的密码。 </div><div class="line"> “AUTH_TYPE”</div><div class="line"> 当 PHP 运行在 Apache 模块方式下，并且正在使用 HTTP 认证功能，这个变量便是认证的类型。 </div><div class="line"> */</div><div class="line"> </div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">authenticate</span><span class="params">()</span> </span>&#123;</div><div class="line">  header(<span class="string">"HTTP/1.0 401 Authorization Required"</span>);</div><div class="line">  header(<span class="string">"WWW-Authenticate: Basic realm='test'"</span>);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"请输入认证的用户名和密码"</span>;</div><div class="line">  <span class="keyword">exit</span>;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">check_user</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($_SERVER[<span class="string">'PHP_AUTH_USER'</span>]) &amp;&amp; <span class="keyword">isset</span>($_SERVER[<span class="string">'PHP_AUTH_PW'</span>])) &#123;</div><div class="line">       <span class="comment">//这里可以改成访问DB获取用户名和密码即可</span></div><div class="line">       <span class="keyword">if</span>($_SERVER[<span class="string">'PHP_AUTH_USER'</span>]==<span class="string">'tenfyguo'</span> &amp;&amp; $_SERVER[<span class="string">'PHP_AUTH_PW'</span>]==<span class="string">'tenfyguo'</span>)&#123;</div><div class="line">       <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="keyword">if</span>(check_user() &lt; <span class="number">0</span> )&#123;</div><div class="line">    authenticate();</div><div class="line"> &#125;</div><div class="line"> <span class="keyword">echo</span> <span class="string">"验证正常"</span>;</div><div class="line"> <span class="keyword">exit</span>;</div><div class="line"> <span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>　 函数authenticate()的作用是利用函数header(“WWW-Authenticate: Basic realm=’test’”)，向浏览器发送一个认证请求消息，<br>    使浏览器弹出一个用户名/密码的对话框。当用户输入用户名和密码后，包含此PHP脚本的URL将自动地被再次调用，<br>    将用户名、密码、认证类型分别存放到PHP的三个特殊变量：“PHP_AUTH_USER”、“PHP_AUTH_PW”、“AUTH_TYPE”，在PHP程序中可根据这三个变量值来判断是否合法用户。<br>    header()函数中，basic表示基本认证类型，realm的值表示认证区域名称。</p>
+<p>　 函数header(“HTTP/1.0 401 Authorization Required”)使浏览器用户在连续多次输入错误的用户名或密码时接收到HTTP 401错误。
+　　　　</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/lamp3mpm/" rel="next" title="LAMP架构(2)MPM工作模式">
+                <i class="fa fa-chevron-left"></i> LAMP架构(2)MPM工作模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Lewis" />
+          <p class="site-author-name" itemprop="name">Lewis</p>
+           
+              <p class="site-description motion-element" itemprop="description">devopslewis@outlook.com</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#实现用户验证的需求"><span class="nav-number">1.</span> <span class="nav-text">实现用户验证的需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一，采用文本文件存储"><span class="nav-number">2.</span> <span class="nav-text">一，采用文本文件存储</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，采用数据库存储"><span class="nav-number">3.</span> <span class="nav-text">二，采用数据库存储</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lewis</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
