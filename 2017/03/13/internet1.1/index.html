@@ -1,0 +1,711 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="网络的定义
+简单定义：互联起来的独立自主的计算机集合
+完整的定义：利用通信设备和线路，将分布在不同地理位置的、功能独立的多个计算机系统连接起来，以功能完善的网络软件（网络通信协议及网络操作系统等）实现网络中资源共享和信息传递的系统
+
+计算机网络的功能
+数据交换通信  计算机网络中的计算机之间或计算机与终端之间，可以快速可靠地相互传递数据、程序或文件。
+资源共享  充分利用计算机网络中提供的资源（包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络基础1.1网络基础知识">
+<meta property="og:url" content="http://developersLewis.github.io/2017/03/13/internet1.1/index.html">
+<meta property="og:site_name" content="Lewis's Home">
+<meta property="og:description" content="网络的定义
+简单定义：互联起来的独立自主的计算机集合
+完整的定义：利用通信设备和线路，将分布在不同地理位置的、功能独立的多个计算机系统连接起来，以功能完善的网络软件（网络通信协议及网络操作系统等）实现网络中资源共享和信息传递的系统
+
+计算机网络的功能
+数据交换通信  计算机网络中的计算机之间或计算机与终端之间，可以快速可靠地相互传递数据、程序或文件。
+资源共享  充分利用计算机网络中提供的资源（包">
+<meta property="og:updated_time" content="2017-03-13T08:43:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络基础1.1网络基础知识">
+<meta name="twitter:description" content="网络的定义
+简单定义：互联起来的独立自主的计算机集合
+完整的定义：利用通信设备和线路，将分布在不同地理位置的、功能独立的多个计算机系统连接起来，以功能完善的网络软件（网络通信协议及网络操作系统等）实现网络中资源共享和信息传递的系统
+
+计算机网络的功能
+数据交换通信  计算机网络中的计算机之间或计算机与终端之间，可以快速可靠地相互传递数据、程序或文件。
+资源共享  充分利用计算机网络中提供的资源（包">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://developersLewis.github.io/2017/03/13/internet1.1/"/>
+
+
+
+
+
+  <title> 网络基础1.1网络基础知识 | Lewis's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lewis's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">MY NAME IS LEWIS,AND I AM YOUR GOD.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://developersLewis.github.io/2017/03/13/internet1.1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lewis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lewis's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                网络基础1.1网络基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-13T16:07:44+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="网络的定义"><a href="#网络的定义" class="headerlink" title="网络的定义"></a>网络的定义</h1><ul>
+<li>简单定义：互联起来的独立自主的计算机集合</li>
+<li>完整的定义：利用通信设备和线路，将分布在不同地理位置的、功能独立的多个计算机系统连接起来，以功能完善的网络软件（网络通信协议及网络操作系统等）实现网络中资源共享和信息传递的系统</li>
+</ul>
+<h1 id="计算机网络的功能"><a href="#计算机网络的功能" class="headerlink" title="计算机网络的功能"></a>计算机网络的功能</h1><ul>
+<li>数据交换通信<br>  计算机网络中的计算机之间或计算机与终端之间，可以快速可靠地相互传递数据、程序或文件。</li>
+<li>资源共享<br>  充分利用计算机网络中提供的资源（包括硬件、软件和数据）是计算机网络组网的主要目标之一。</li>
+<li>提高系统的可靠性<br>  在一些用于计算机实时控制和要求高可靠性的场合，通过计算机网络实现备份技术可以提高计算机系统的可靠性。</li>
+<li>分布式网络处理和负载均衡<br>  对于大型的任务或当网络中某台计算机的任务负荷太重时，可将任务分散到网络中的各台计算机上进行，或由网络中比较空闲的计算机分担负荷</li>
+</ul>
+<h1 id="计算机网络的发展历史"><a href="#计算机网络的发展历史" class="headerlink" title="计算机网络的发展历史"></a>计算机网络的发展历史</h1><p>计算机网络的发展过程大致可分为以下四个阶段：</p>
+<ul>
+<li>第一阶段：以单个计算机为中心的远程联机系统，构成面向终端的计算机通信网（20世纪50年代 1950）</li>
+<li>第二阶段：多个自主功能的主机通过通信线路互联，形成资源共享的计算机网络（20世纪60年代末 1960）</li>
+<li>第三阶段：形成具有统一的网络体系结构、遵循国际标准化协议的计算机网络（20世纪70年代末 1970）</li>
+<li>第四个阶段：向互连、高速、智能化方向发展的计算机网络（始于20世纪80年代末 1980）</li>
+</ul>
+<h2 id="网络标准化产生的背景"><a href="#网络标准化产生的背景" class="headerlink" title="网络标准化产生的背景"></a>网络标准化产生的背景</h2><p>各厂商的标准化体系：</p>
+<ul>
+<li>IBM公司：SNA（系统网络体系结构）</li>
+<li>DEC公司：DNA （数字网络系统结构）</li>
+<li>UNIVAC公司：DCA（数据通信体系结构）</li>
+<li>Burroughs公司：BNA（宝来网络体系结构）<br>只在一个公司范围内有效，也就是说，遵从某种标准的、能够互联的网络通信产品，也可只限于同一公司生产的同构型设备。</li>
+</ul>
+<p>ISO国际化标准组织</p>
+<h1 id="计算机网络分类"><a href="#计算机网络分类" class="headerlink" title="计算机网络分类"></a>计算机网络分类</h1><h2 id="按地理相对位置分："><a href="#按地理相对位置分：" class="headerlink" title="按地理相对位置分："></a>按地理相对位置分：</h2><ul>
+<li>LAN 局域网</li>
+<li>MAN 城域网</li>
+<li>WAN 广域网<h2 id="按传输介质分："><a href="#按传输介质分：" class="headerlink" title="按传输介质分："></a>按传输介质分：</h2></li>
+<li>有限传输（网线、光纤）</li>
+<li>无线传输（WiFi，红外，卫星）<h2 id="按使用性质分："><a href="#按使用性质分：" class="headerlink" title="按使用性质分："></a>按使用性质分：</h2></li>
+<li>公共网络</li>
+<li>专有网络（银行，军事，IDC）<h1 id="网络的拓扑结构"><a href="#网络的拓扑结构" class="headerlink" title="网络的拓扑结构"></a>网络的拓扑结构</h1><blockquote>
+<p>计算机网络的拓扑结构主要有：总线型拓扑、星型拓扑、环型拓扑、树型拓扑和混合型拓扑.<br>总线型拓扑<br>总线型结构由一条高速公用主干电缆即总线连接若干个结点构成网络.网络中所有的结点通过总线进行信息的传输.这种结构的特点是结构简单灵活,建网容易,使用方便,性能好.其缺点是主干总线对网络起决定性作用,总线故障将影响整个网络. 总线型拓扑是使用最普遍的一种网络.<br>星型拓扑<br>星型拓扑由中央结点集线器与各个结点连接组成.这种网络各结点必须通过中央结点才能实现通信.星型结构的特点是结构简单、建网容易,便于控制和管理.其缺点是中央结点负担较重,容易形成系统的“瓶颈”,线路的利用率也不高.<br>环型拓扑<br>环型拓扑由各结点首尾相连形成一个闭合环型线路.环型网络中的信息传送是单向的,即沿一个方向从一个结点传到另一个结点；每个结点需安装中继器,以接收、放大、发送信号.这种结构的特点是结构简单,建网容易,便于管理.其缺点是当结点过多时,将影响传输效率,不利于扩充.<br>树型拓扑<br>树型拓扑是一种分级结构.在树型结构的网络中,任意两个结点之间不产生回路,每条通路都支持双向传输.这种结构的特点是扩充方便、灵活,成本低,易推广,适合于分主次或分等级的层次型管理系统.<br>网型拓扑<br>主要用于广域网,由于结点之间有多条线路相连,所以网络的可靠性较搞高.由于结构比较复杂,建设成本较高.<br>混合型拓扑<br>混合型拓扑可以是不规则型的网络,也可以是点-点相连结构的网络.<br>蜂窝拓扑结构<br>蜂窝拓扑结构是无线局域网中常用的结构.它以无线传输介质（微波、卫星、红外等）点到点和多点传输为特征,是一种无线网,适用于城市网、校园网、企业网.<br>编辑本段局域网的结构<br>局域网中常见的结构为总线型或星型.<br><a href="&quot;/images/it1.png&quot;">拓扑</a></p>
+<h1 id="衡量计算机网络的主要指标："><a href="#衡量计算机网络的主要指标：" class="headerlink" title="衡量计算机网络的主要指标："></a>衡量计算机网络的主要指标：</h1><h2 id="带宽-bandwidth"><a href="#带宽-bandwidth" class="headerlink" title="带宽(bandwidth)"></a>带宽(bandwidth)</h2></blockquote>
+</li>
+<li>描述在一定时间范围内能够从一个节点传送到另一个节点的数据量</li>
+<li>通常以bps为单位</li>
+<li>例如以太网带宽为10Mbps,快速以太网为100Mbps<h2 id="延迟（delay）"><a href="#延迟（delay）" class="headerlink" title="延迟（delay）"></a>延迟（delay）</h2></li>
+<li>描述网络上数据从一个节点传送到另一个节点所经历的时间</li>
+<li>延迟越短越好<h2 id="检测工具ping"><a href="#检测工具ping" class="headerlink" title="检测工具ping"></a>检测工具ping</h2></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/13/centos6installhttpd24/" rel="next" title="编译安装httpd-2.4">
+                <i class="fa fa-chevron-left"></i> 编译安装httpd-2.4
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Lewis" />
+          <p class="site-author-name" itemprop="name">Lewis</p>
+           
+              <p class="site-description motion-element" itemprop="description">devopslewis@outlook.com</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络的定义"><span class="nav-number">1.</span> <span class="nav-text">网络的定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络的功能"><span class="nav-number">2.</span> <span class="nav-text">计算机网络的功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络的发展历史"><span class="nav-number">3.</span> <span class="nav-text">计算机网络的发展历史</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络标准化产生的背景"><span class="nav-number">3.1.</span> <span class="nav-text">网络标准化产生的背景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络分类"><span class="nav-number">4.</span> <span class="nav-text">计算机网络分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#按地理相对位置分："><span class="nav-number">4.1.</span> <span class="nav-text">按地理相对位置分：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按传输介质分："><span class="nav-number">4.2.</span> <span class="nav-text">按传输介质分：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按使用性质分："><span class="nav-number">4.3.</span> <span class="nav-text">按使用性质分：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络的拓扑结构"><span class="nav-number">5.</span> <span class="nav-text">网络的拓扑结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#衡量计算机网络的主要指标："><span class="nav-number">6.</span> <span class="nav-text">衡量计算机网络的主要指标：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#带宽-bandwidth"><span class="nav-number">6.1.</span> <span class="nav-text">带宽(bandwidth)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延迟（delay）"><span class="nav-number">6.2.</span> <span class="nav-text">延迟（delay）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检测工具ping"><span class="nav-number">6.3.</span> <span class="nav-text">检测工具ping</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lewis</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
