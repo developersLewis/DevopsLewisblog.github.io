@@ -88,25 +88,25 @@
 
 
 <meta name="description" content="Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。
-一、编译安装的优势
-源码的编译安装一般由3个步骤组成：
+
+一、编译安装的优势源码的编译安装一般由3个步骤组成：
 
 配置(configure)，通常依赖gcc编译器，binutils，gl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos6.x编译安装httpd-2.4">
+<meta property="og:title" content="编译安装httpd-2.4">
 <meta property="og:url" content="http://developersLewis.github.io/2017/03/13/centos6installhttpd24/index.html">
 <meta property="og:site_name" content="Lewis's Home">
 <meta property="og:description" content="Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。
-一、编译安装的优势
-源码的编译安装一般由3个步骤组成：
+
+一、编译安装的优势源码的编译安装一般由3个步骤组成：
 
 配置(configure)，通常依赖gcc编译器，binutils，gl">
-<meta property="og:updated_time" content="2017-03-13T07:17:05.000Z">
+<meta property="og:updated_time" content="2017-03-13T07:20:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos6.x编译安装httpd-2.4">
+<meta name="twitter:title" content="编译安装httpd-2.4">
 <meta name="twitter:description" content="Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。
-一、编译安装的优势
-源码的编译安装一般由3个步骤组成：
+
+一、编译安装的优势源码的编译安装一般由3个步骤组成：
 
 配置(configure)，通常依赖gcc编译器，binutils，gl">
 
@@ -142,7 +142,7 @@
 
 
 
-  <title> Centos6.x编译安装httpd-2.4 | Lewis's Home </title>
+  <title> 编译安装httpd-2.4 | Lewis's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -282,7 +282,7 @@
             
             
               
-                Centos6.x编译安装httpd-2.4
+                编译安装httpd-2.4
               
             
           </h1>
@@ -357,8 +357,8 @@
       
         <blockquote>
 <p>Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。</p>
-<h1 id="一、编译安装的优势"><a href="#一、编译安装的优势" class="headerlink" title="一、编译安装的优势"></a>一、编译安装的优势</h1></blockquote>
-<p>源码的编译安装一般由3个步骤组成：</p>
+</blockquote>
+<h1 id="一、编译安装的优势"><a href="#一、编译安装的优势" class="headerlink" title="一、编译安装的优势"></a>一、编译安装的优势</h1><p>源码的编译安装一般由3个步骤组成：</p>
 <ul>
 <li>配置(configure)，通常依赖gcc编译器，binutils，glibc。配置软件特性，检查编译环境，生成 Makefile文件</li>
 <li>编译(make)</li>
@@ -373,15 +373,15 @@
 </ul>
 <blockquote>
 <p>configure是一个可执行脚本，它有很多选项，在待安装的源码路径下使用命令./configure –-help输出详细的选项列表。<br>常用的选项<br>–prefix<br>    该选项是配置安装的路径，如果不配置该选项，安装后可执行文件默认放在/usr /local/bin，<br>    库文件默认放在/usr/local/lib，配置文件默认放在/usr/local/etc，其它的资源文件放在/usr /local/share<br>    如果配置–prefix，如： ./configure –prefix=/usr/local/test<br>    则可以把所有资源文件放在/usr/local/test的路径中，不会杂乱。<br>    用了—prefix选项的另一个好处是卸载软件或移植软件。<br>    当某个安装的软件不再需要时，只须简单的删除该安装目录，就可以把软件卸载得干干净净；<br>    移植软件只需拷贝整个目录到另外一个机器即可（相同的操作系统）。<br>    当然要卸载程序，也可以在原来的make目录下用一次make uninstall，但前提是make文件指定过uninstall。</p>
-<h1 id="二、httpd的版本"><a href="#二、httpd的版本" class="headerlink" title="二、httpd的版本"></a>二、httpd的版本</h1></blockquote>
-<p>版本：</p>
+</blockquote>
+<h1 id="二、httpd的版本"><a href="#二、httpd的版本" class="headerlink" title="二、httpd的版本"></a>二、httpd的版本</h1><p>版本：</p>
 <ul>
 <li>httpd-1.3</li>
 <li>httpd-2.0</li>
 <li>httpd-2.2</li>
-<li>httpd-2.4<h1 id="三、httpd-2-4的新特性"><a href="#三、httpd-2-4的新特性" class="headerlink" title="三、httpd 2.4的新特性"></a>三、httpd 2.4的新特性</h1></li>
+<li>httpd-2.4</li>
 </ul>
-<p>1) MPM支持运行时装载<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--enable-mpms-shared=all --<span class="built_in">with</span>-mpm=prefork|<span class="type">worker</span>|<span class="type">event</span></div></pre></td></tr></table></figure></p>
+<h1 id="三、httpd-2-4的新特性"><a href="#三、httpd-2-4的新特性" class="headerlink" title="三、httpd 2.4的新特性"></a>三、httpd 2.4的新特性</h1><p>1) MPM支持运行时装载<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--enable-mpms-shared=all --<span class="built_in">with</span>-mpm=prefork|<span class="type">worker</span>|<span class="type">event</span></div></pre></td></tr></table></figure></p>
 <p>2) 支持event MPM<br>3) 异步读写支持<br>4) 支持每模块及每目录分别使用不同的日志级别<br>5) 支持per-request(即支持<if>, <elseif>, and <else>条件判断)<br>6) 增强版的表达式分析器；<br>7) 支持毫秒级keepalive timeout;<br>8) 基于FQDN(域名)的虚拟主机不再需要NameVirtualHost；<br>9) 支持用户使用自定义变量； </else></elseif></if></p>
 <p>新增一些模块：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mod_proxy_fcgi， mod_ratelimit, mod_request, mod_remoteip</div></pre></td></tr></table></figure></p>
 <p>修改了一些配置机制：不再支持使用order, allow, deny来实现基于IP的访问控制； </p>
