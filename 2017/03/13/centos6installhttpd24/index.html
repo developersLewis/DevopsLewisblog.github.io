@@ -87,19 +87,28 @@
 
 
 
-<meta name="description" content="centos6 yum安装的apr版本已经不适用httpd-2.4版本了。所以，需要源码编译apr以及apr-util
-下载源码：123456cd /usr/local/src/wget http://mirror.bit.edu.cn/apache/httpd/httpd-2.4.25.tar.gzwget http://mirror.bit.edu.cn/apache/apr/apr-1.5.">
+<meta name="description" content="Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。
+一、编译安装的优势
+源码的编译安装一般由3个步骤组成：
+
+配置(configure)，通常依赖gcc编译器，binutils，gl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Centos6.x编译安装httpd-2.4">
 <meta property="og:url" content="http://developersLewis.github.io/2017/03/13/centos6installhttpd24/index.html">
 <meta property="og:site_name" content="Lewis's Home">
-<meta property="og:description" content="centos6 yum安装的apr版本已经不适用httpd-2.4版本了。所以，需要源码编译apr以及apr-util
-下载源码：123456cd /usr/local/src/wget http://mirror.bit.edu.cn/apache/httpd/httpd-2.4.25.tar.gzwget http://mirror.bit.edu.cn/apache/apr/apr-1.5.">
-<meta property="og:updated_time" content="2017-03-13T01:43:32.000Z">
+<meta property="og:description" content="Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。
+一、编译安装的优势
+源码的编译安装一般由3个步骤组成：
+
+配置(configure)，通常依赖gcc编译器，binutils，gl">
+<meta property="og:updated_time" content="2017-03-13T07:17:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos6.x编译安装httpd-2.4">
-<meta name="twitter:description" content="centos6 yum安装的apr版本已经不适用httpd-2.4版本了。所以，需要源码编译apr以及apr-util
-下载源码：123456cd /usr/local/src/wget http://mirror.bit.edu.cn/apache/httpd/httpd-2.4.25.tar.gzwget http://mirror.bit.edu.cn/apache/apr/apr-1.5.">
+<meta name="twitter:description" content="Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。
+一、编译安装的优势
+源码的编译安装一般由3个步骤组成：
+
+配置(configure)，通常依赖gcc编译器，binutils，gl">
 
 
 
@@ -346,12 +355,129 @@
       
 
       
-        <p>centos6 yum安装的apr版本已经不适用httpd-2.4版本了。所以，需要源码编译apr以及apr-util</p>
-<h1 id="下载源码："><a href="#下载源码：" class="headerlink" title="下载源码："></a>下载源码：</h1><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd <span class="regexp">/usr/</span>local<span class="regexp">/src/</span></div><div class="line">wget <span class="string">http:</span><span class="comment">//mirror.bit.edu.cn/apache/httpd/httpd-2.4.25.tar.gz</span></div><div class="line"></div><div class="line">wget <span class="string">http:</span><span class="comment">//mirror.bit.edu.cn/apache/apr/apr-1.5.2.tar.gz</span></div><div class="line"></div><div class="line">wget <span class="string">http:</span><span class="comment">//mirror.bit.edu.cn/apache/apr/apr-util-1.5.4.tar.gz</span></div></pre></td></tr></table></figure>
-<h1 id="安装apr"><a href="#安装apr" class="headerlink" title="安装apr"></a>安装apr</h1><figure class="highlight gauss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tar zxvf apr<span class="number">-1.5</span><span class="number">.2</span>.tar.bz2 <span class="meta">#解压APR包</span></div><div class="line">cd apr<span class="number">-1.5</span><span class="number">.2</span></div><div class="line"></div><div class="line">./configure --prefix=/usr/<span class="keyword">local</span>/apr</div><div class="line"><span class="built_in">make</span> &amp;&amp; <span class="built_in">make</span> install <span class="meta">#编译安装</span></div></pre></td></tr></table></figure>
-<h1 id="安装apr-util"><a href="#安装apr-util" class="headerlink" title="安装apr-util"></a>安装apr-util</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tar zxvf apr-util-<span class="number">1.5</span>.<span class="number">4</span>.tar.gz <span class="comment">#解压APR-util包</span></div><div class="line"></div><div class="line">cd apr-util-<span class="number">1.5</span>.<span class="number">4</span></div><div class="line">.<span class="regexp">/configure --prefix=/u</span>sr<span class="regexp">/local/</span>apr-util  --with-apr=<span class="regexp">/usr/</span>local<span class="regexp">/apr/</span></div><div class="line">make &amp;&amp; make install  <span class="comment">#编译安装</span></div></pre></td></tr></table></figure>
-<h1 id="安装httpd"><a href="#安装httpd" class="headerlink" title="安装httpd"></a>安装httpd</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum <span class="keyword">install</span>  gcc  make cmake  pcre-devel <span class="comment">#安装所需环境</span></div></pre></td></tr></table></figure>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=<span class="regexp">/usr/local</span><span class="regexp">/apache2 --with-apr=/usr</span><span class="regexp">/local/apr</span> --<span class="keyword">with</span>-apr-util=<span class="regexp">/usr/local</span><span class="regexp">/apr-util/</span></div><div class="line">make &amp;&amp; make install  <span class="comment">#编译安装</span></div></pre></td></tr></table></figure>
+        <blockquote>
+<p>Apache是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。当前Apache版本为2.4，本文主要描述基于CentOS 6.5以源码方式安装Apache httpd。</p>
+<h1 id="一、编译安装的优势"><a href="#一、编译安装的优势" class="headerlink" title="一、编译安装的优势"></a>一、编译安装的优势</h1></blockquote>
+<p>源码的编译安装一般由3个步骤组成：</p>
+<ul>
+<li>配置(configure)，通常依赖gcc编译器，binutils，glibc。配置软件特性，检查编译环境，生成 Makefile文件</li>
+<li>编译(make)</li>
+<li>安装(make install)</li>
+</ul>
+<p>优势</p>
+<ul>
+<li>自定义软件功能</li>
+<li>优化编译参数，提高性能</li>
+<li>解决不必要的软件间依赖</li>
+<li>方便清理与卸载</li>
+</ul>
+<blockquote>
+<p>configure是一个可执行脚本，它有很多选项，在待安装的源码路径下使用命令./configure –-help输出详细的选项列表。<br>常用的选项<br>–prefix<br>    该选项是配置安装的路径，如果不配置该选项，安装后可执行文件默认放在/usr /local/bin，<br>    库文件默认放在/usr/local/lib，配置文件默认放在/usr/local/etc，其它的资源文件放在/usr /local/share<br>    如果配置–prefix，如： ./configure –prefix=/usr/local/test<br>    则可以把所有资源文件放在/usr/local/test的路径中，不会杂乱。<br>    用了—prefix选项的另一个好处是卸载软件或移植软件。<br>    当某个安装的软件不再需要时，只须简单的删除该安装目录，就可以把软件卸载得干干净净；<br>    移植软件只需拷贝整个目录到另外一个机器即可（相同的操作系统）。<br>    当然要卸载程序，也可以在原来的make目录下用一次make uninstall，但前提是make文件指定过uninstall。</p>
+<h1 id="二、httpd的版本"><a href="#二、httpd的版本" class="headerlink" title="二、httpd的版本"></a>二、httpd的版本</h1></blockquote>
+<p>版本：</p>
+<ul>
+<li>httpd-1.3</li>
+<li>httpd-2.0</li>
+<li>httpd-2.2</li>
+<li>httpd-2.4<h1 id="三、httpd-2-4的新特性"><a href="#三、httpd-2-4的新特性" class="headerlink" title="三、httpd 2.4的新特性"></a>三、httpd 2.4的新特性</h1></li>
+</ul>
+<p>1) MPM支持运行时装载<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--enable-mpms-shared=all --<span class="built_in">with</span>-mpm=prefork|<span class="type">worker</span>|<span class="type">event</span></div></pre></td></tr></table></figure></p>
+<p>2) 支持event MPM<br>3) 异步读写支持<br>4) 支持每模块及每目录分别使用不同的日志级别<br>5) 支持per-request(即支持<if>, <elseif>, and <else>条件判断)<br>6) 增强版的表达式分析器；<br>7) 支持毫秒级keepalive timeout;<br>8) 基于FQDN(域名)的虚拟主机不再需要NameVirtualHost；<br>9) 支持用户使用自定义变量； </else></elseif></if></p>
+<p>新增一些模块：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mod_proxy_fcgi， mod_ratelimit, mod_request, mod_remoteip</div></pre></td></tr></table></figure></p>
+<p>修改了一些配置机制：不再支持使用order, allow, deny来实现基于IP的访问控制； </p>
+<h1 id="四、编译安装httpd-2-4"><a href="#四、编译安装httpd-2-4" class="headerlink" title="四、编译安装httpd 2.4"></a>四、编译安装httpd 2.4</h1><h2 id="依赖关系"><a href="#依赖关系" class="headerlink" title="依赖关系"></a>依赖关系</h2><pre><code>httpd依赖于apr, apr-util
+apr全称为apache portable runtime，能实现httpd跨平台运行
+
+httpd-2.4 依賴于1.4＋及以上版本的apr
+
+    apr-1.5.0.tar.bz2
+    apr-util-1.5.3.tar.bz2
+    httpd-2.4.9.tar.bz2
+
+    pcre-devel包
+    openssl-devel
+</code></pre><h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><pre><code># yum install gcc
+# yum install pcre-devel
+
+# tar xf apr-1.5.0.tar.bz2
+# cd apr-1.5.0
+# ./configure --prefix=/usr/local/apr   (--prefix指定apr安装的目录)
+# make
+# make  install
+
+# tar xf apr-util-1.5.3.tar.bz2
+# cd apr-util-1.5.3
+# ./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr
+# make &amp;&amp; make install ###该项被漏掉，补充@20160714
+
+
+# tar xf httpd-2.4.9.tar.bz2
+    以下为几个主要的配置项
+    --sysconfdir=/etc/httpd24  指定配置文件路径
+    --enable-so  启动模块动态装卸载
+    --enable-ssl 编译ssl模块
+    --enable-cgi 支持cgi机制（能够让静态web服务器能够解析动态请求的一个协议）
+    --enable-rewrite  支持url重写     --Author : Leshami
+    --with-zlib  支持数据包压缩       --Blog   : http://blog.csdn.net/leshami
+    --with-pcre  支持正则表达式
+    --with-apr=/usr/local/apr  指明依赖的apr所在目录
+    --with-apr-util=/usr/local/apr-util/  指明依赖的apr-util所在的目录
+    --enable-modules=most      启用的模块
+    --enable-mpms-shared=all   以共享方式编译的模块
+    --with-mpm=prefork         指明httpd的工作方式为prefork
+
+# cd httpd-2.4.9
+# ./configure                           \
+    --with-apr=/usr/local/apr           \
+    --with-apr-util=/usr/local/apr-util \
+    --prefix=/usr/local/apache \
+    --sysconfdir=/etc/httpd24  \
+    --enable-so                \
+    --enable-ssl               \
+    --enable-cgi               \
+    --enable-rewrite           \
+    --with-zlib                \
+    --with-pcre                \
+    --with-mpm=prefork         \
+    --enable-modules=most      \
+    --enable-mpms-shared=all   
+
+# make 
+# make install
+</code></pre><h1 id="五、配置http2-4启动及停止"><a href="#五、配置http2-4启动及停止" class="headerlink" title="五、配置http2.4启动及停止"></a>五、配置http2.4启动及停止</h1><h2 id="修改端口号"><a href="#修改端口号" class="headerlink" title="修改端口号"></a>修改端口号</h2><pre><code>修改端口号使得与2.2版本使用不同的端口，可以同时运行，修改后如下
+    # cat /etc/httpd24/httpd.conf |grep Listen |grep -v ^#
+    Listen 8080
+</code></pre><h2 id="启动与停止"><a href="#启动与停止" class="headerlink" title="启动与停止"></a>启动与停止</h2><pre><code># /usr/local/apache/bin/apachectl start
+# netstat -nltp|grep 80
+tcp        0      0 :::8080    :::*     LISTEN      17365/httpd  
+
+# /usr/local/apache/bin/apachectl status
+Not Found
+   The requested URL /server-status was not found on this server.
+
+通过修改httpd.conf，增加如下配置
+# grep server-stat /etc/httpd24/httpd.conf -A5
+    &lt;Location /server-status&gt;
+        SetHandler server-status
+    #    Order deny,allow
+    #    Deny from all
+        Allow from 192.168.21.157 192.168.21.10
+    &lt;/Location&gt;
+
+# /usr/local/apache/bin/apachectl restart
+# /usr/local/apache/bin/apachectl status
+   Apache Server Status for localhost (via 127.0.0.1)
+   Server Version: Apache/2.4.9 (Unix)
+   Server MPM: prefork
+       ..........
+
+# /usr/local/apache/bin/apachectl stop
+</code></pre><h2 id="配置自启动文件"><a href="#配置自启动文件" class="headerlink" title="配置自启动文件"></a>配置自启动文件</h2><pre><code>可以通过复制2.2版本的启动文件，修改相关路径后将2.4版作为单独服务运行，如下
+注启动文件pid文件位置要配置成与/usr/local/apache/bin/apachectl -V看到的pid位置一致
+    查看pid位置
+</code></pre><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">    <span class="comment"># /usr/local/apache/bin/apachectl -V|grep pid</span></div><div class="line">     -D DEFAULT_PIDLOG=<span class="string">"logs/httpd.pid"</span></div><div class="line"></div><div class="line">    <span class="comment"># cp /etc/init.d/httpd /etc/init.d/httpd24 </span></div><div class="line">    <span class="comment"># vi /etc/init.d/httpd24  </span></div><div class="line">    <span class="comment"># diff /etc/init.d/httpd /etc/init.d/httpd24 </span></div><div class="line">        <span class="number">26</span>,<span class="number">27</span>c26,<span class="number">27</span></div><div class="line">        &lt; <span class="keyword">if</span> [ -f /etc/sysconfig/httpd ]; <span class="keyword">then</span></div><div class="line">        &lt;         . /etc/sysconfig/httpd</div><div class="line">        ---</div><div class="line">        &gt; <span class="keyword">if</span> [ -f /etc/httpd24 ]; <span class="keyword">then</span></div><div class="line">        &gt;         . /etc/httpd24</div><div class="line">        <span class="number">42</span>,<span class="number">46</span>c42,<span class="number">46</span></div><div class="line">        &lt; apachectl=<span class="regexp">/usr/sbin</span><span class="regexp">/apachectl</span></div><div class="line">        &lt; httpd=$&#123;HTTPD-/usr<span class="regexp">/sbin/httpd</span>&#125;</div><div class="line">        &lt; prog=httpd</div><div class="line">        &lt; pidfile=$&#123;PIDFILE-<span class="regexp">/var/run</span><span class="regexp">/httpd/httpd</span>.pid&#125;</div><div class="line">        &lt; lockfile=$&#123;LOCKFILE-<span class="regexp">/var/lock</span><span class="regexp">/subsys/httpd</span>&#125;</div><div class="line">        ---</div><div class="line">        &gt; apachectl=<span class="regexp">/usr/local</span><span class="regexp">/apache/bin</span><span class="regexp">/apachectl</span></div><div class="line">        &gt; httpd=$&#123;HTTPD-/usr<span class="regexp">/local/apache</span><span class="regexp">/bin/httpd</span>&#125;</div><div class="line">        &gt; prog=httpd24</div><div class="line">        &gt; pidfile=$&#123;PIDFILE-<span class="regexp">/usr/local</span><span class="regexp">/apache/logs</span><span class="regexp">/httpd.pid&#125;</span></div><div class="line">        &gt; lockfile=$&#123;LOCKFILE-/var<span class="regexp">/lock/subsys</span><span class="regexp">/httpd24&#125;</span></div><div class="line"></div><div class="line">    # service httpd24 start</div><div class="line">    Starting httpd24:                          [  OK  ]</div><div class="line">    # service httpd24 status</div><div class="line">    httpd (pid  15641) is running...</div><div class="line"></div><div class="line">    # netstat -nltp|grep 80</div><div class="line">    tcp        0      0 :::80     :::*     LISTEN      15677/httpd   <span class="comment">###2.2版httpd       </span></div><div class="line">    tcp        <span class="number">0</span>      <span class="number">0</span> :::<span class="number">8080</span>   :::*     LISTEN      <span class="number">15641</span>/httpd   <span class="comment">###2.4版httpd</span></div><div class="line"></div><div class="line">可以通过复制apachectl文件生成服务脚本     </div><div class="line">    <span class="comment"># cp /usr/local/apache/bin/apachectl /etc/init.d/httpd249</span></div><div class="line"></div><div class="line">    <span class="comment"># service httpd249 start</span></div><div class="line">    <span class="comment"># service httpd249 status</span></div><div class="line">    <span class="symbol">ELinks:</span> Connection refused    <span class="comment">###该方式无法查看到状态     </span></div><div class="line"></div><div class="line">    [root@orasrv1 bin]<span class="comment"># netstat -nltp|grep 80</span></div><div class="line">    tcp        <span class="number">0</span>      <span class="number">0</span> :::<span class="number">8080</span>     :::*     LISTEN      <span class="number">15999</span>/httpd   </div><div class="line"></div><div class="line">最后将配置文件添加到服务，以下为http24为例</div><div class="line">    <span class="comment"># chkconfig --add httpd24</span></div><div class="line">    <span class="comment"># chkconfig httpd24 on</span></div></pre></td></tr></table></figure>
+<h1 id="六、配置man手册"><a href="#六、配置man手册" class="headerlink" title="六、配置man手册"></a>六、配置man手册</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vi <span class="regexp">/etc/m</span>an.config</div><div class="line">MANPATH <span class="regexp">/usr/</span>local<span class="regexp">/apache/m</span>an</div></pre></td></tr></table></figure>
+<h1 id="七、验证"><a href="#七、验证" class="headerlink" title="七、验证"></a>七、验证</h1><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># echo <span class="string">"This is a apached 2.4.9 version"</span>&gt;&gt;/usr/local/apache/htdocs/index.html    </span></div><div class="line"><span class="meta"># curl http:<span class="comment">//192.168.21.10:8080 </span></span></div><div class="line"><span class="params">&lt;html&gt;</span><span class="params">&lt;body&gt;</span><span class="params">&lt;h1&gt;</span>It works!<span class="params">&lt;/h1&gt;</span><span class="params">&lt;/body&gt;</span><span class="params">&lt;/html&gt;</span> </div><div class="line">This is a apached <span class="number">2.4</span><span class="number">.9</span> version</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -509,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载源码："><span class="nav-number">1.</span> <span class="nav-text">下载源码：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装apr"><span class="nav-number">2.</span> <span class="nav-text">安装apr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装apr-util"><span class="nav-number">3.</span> <span class="nav-text">安装apr-util</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装httpd"><span class="nav-number">4.</span> <span class="nav-text">安装httpd</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、编译安装的优势"><span class="nav-number">1.</span> <span class="nav-text">一、编译安装的优势</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、httpd的版本"><span class="nav-number">2.</span> <span class="nav-text">二、httpd的版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、httpd-2-4的新特性"><span class="nav-number">3.</span> <span class="nav-text">三、httpd 2.4的新特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、编译安装httpd-2-4"><span class="nav-number">4.</span> <span class="nav-text">四、编译安装httpd 2.4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖关系"><span class="nav-number">4.1.</span> <span class="nav-text">依赖关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译安装"><span class="nav-number">4.2.</span> <span class="nav-text">编译安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、配置http2-4启动及停止"><span class="nav-number">5.</span> <span class="nav-text">五、配置http2.4启动及停止</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改端口号"><span class="nav-number">5.1.</span> <span class="nav-text">修改端口号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动与停止"><span class="nav-number">5.2.</span> <span class="nav-text">启动与停止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置自启动文件"><span class="nav-number">5.3.</span> <span class="nav-text">配置自启动文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、配置man手册"><span class="nav-number">6.</span> <span class="nav-text">六、配置man手册</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、验证"><span class="nav-number">7.</span> <span class="nav-text">七、验证</span></a></li></ol></div>
             
 
           </div>
