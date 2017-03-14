@@ -97,7 +97,7 @@
 <meta property="og:description" content="apache的日志是可以自动切割的。方法一： 使用 cronolog 为每一天建立一个新的日志1CustomLog &quot;|bin/cronolog logs/access_%Y%m%d.log&quot; combined
 也可以按小时1CustomLog &quot;|bin/cronolog logs/access_%Y%m%d%h.log&quot; combined
 方法二：使用 rotatelogs 每一天记录一个日志">
-<meta property="og:updated_time" content="2017-03-14T02:36:21.000Z">
+<meta property="og:updated_time" content="2017-03-14T02:39:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache日志切割">
 <meta name="twitter:description" content="apache的日志是可以自动切割的。方法一： 使用 cronolog 为每一天建立一个新的日志1CustomLog &quot;|bin/cronolog logs/access_%Y%m%d.log&quot; combined
@@ -354,12 +354,13 @@
 <p>方法二：使用 rotatelogs 每一天记录一个日志<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CustomLog <span class="string">"|bin/rotatelogs -l logs/access_%Y%m%d.log 86400"</span> combined</div></pre></td></tr></table></figure></p>
 <p>每小时<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CustomLog <span class="string">"|bin/rotatelogs -l logs/access_%Y%m%d%H.log 3600"</span> combined</div></pre></td></tr></table></figure></p>
 <p>再看apache rotatelogs语法<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rotatelogs <span class="comment">[ -l ]</span> logfile <span class="comment">[ rotationtime <span class="comment">[ offset ]</span>]</span> | <span class="comment">[ filesizeM ]</span></div></pre></td></tr></table></figure></p>
-<p>选项<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="_">-l</span></div></pre></td></tr></table></figure></p>
-<p>使用本地时间代替GMT时间作为时间基准。注意：在一个改变GMT偏移量(比如夏令时)的环境中使用-l会导致不可预料的结果。所以一定要加上-l 否则出现的日志时间和实际时间是相差8小时的。<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">logfile</span></div></pre></td></tr></table></figure></p>
-<p>它加上基准名就是日志文件名。如果logfile中包含”%”，则它会被视为用于strftime()的格式字符串；否则它会被自动加上以秒为单位的”.nnnnnnnnnn”后缀。这两种格式都表示新的日志开始使用的时间。<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">rotationtime</span></div></pre></td></tr></table></figure></p>
-<p>日志文件滚动的以秒为单位的间隔时间。<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">offset</span></div></pre></td></tr></table></figure></p>
-<p>相对于UTC的时差的分钟数。如果省略，则假定为”0″并使用UTC时间。比如，要指定UTC时差为”-5小时”的地区的当地时间，则此参数应为”-300″。<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">filesizeM</span></div></pre></td></tr></table></figure></p>
-<p>指定以filesizeM文件大小滚动，而不是按照时间或时差滚动。</p>
+<p>选项</p>
+<ul>
+<li>-l<br>使用本地时间代替GMT时间作为时间基准。注意：在一个改变GMT偏移量(比如夏令时)的环境中使用-l会导致不可预料的结果。所以一定要加上-l 否则出现的日志时间和实际时间是相差8小时的。<br>它加上基准名就是日志文件名。如果logfile中包含”%”，则它会被视为用于strftime()的格式字符串；否则它会被自动加上以秒为单位的”.nnnnnnnnnn”后缀。这两种格式都表示新的日志开始使用的时间。</li>
+<li>rotationtime<br>日志文件滚动的以秒为单位的间隔时间。</li>
+<li>offset<br>相对于UTC的时差的分钟数。如果省略，则假定为”0″并使用UTC时间。比如，要指定UTC时差为”-5小时”的地区的当地时间，则此参数应为”-300″。</li>
+<li>filesizeM<br>指定以filesizeM文件大小滚动，而不是按照时间或时差滚动。</li>
+</ul>
 
       
     </div>
