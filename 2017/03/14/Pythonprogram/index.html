@@ -97,7 +97,7 @@
 <meta property="og:description" content="这篇文章准确说是『Python 源码剖析』的读书笔记，整理完之后才发现很长，那就将就看吧。
 1. 简单的例子先从一个简单的例子说起，包含了两个文件 foo.py 和 demo.py123[foo.py]def add(a, b):    return a + b
 12345678910111213141516[demo.py]import fooa = [1, &apos;python&apos;]a = &apos;a st">
-<meta property="og:updated_time" content="2017-03-14T03:47:37.000Z">
+<meta property="og:updated_time" content="2017-03-14T03:56:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈 Python 程序的运行原理">
 <meta name="twitter:description" content="这篇文章准确说是『Python 源码剖析』的读书笔记，整理完之后才发现很长，那就将就看吧。
@@ -357,12 +357,12 @@
 <p>同时，该文件目录多出一个 foo.pyc 文件</p>
 <h1 id="2-背后的魔法"><a href="#2-背后的魔法" class="headerlink" title="2. 背后的魔法"></a>2. 背后的魔法</h1><p>看完程序的执行结果，接下来开始一行行解释代码。</p>
 <h2 id="2-1-模块"><a href="#2-1-模块" class="headerlink" title="2.1 模块"></a>2.1 模块</h2><p>Python 将 .py 文件视为一个 module，这些 module 中，有一个主 module，也就是程序运行的入口。在这个例子中，主 module 是 demo.py。</p>
-<h2 id="2-2-编译"><a href="#2-2-编译" class="headerlink" title="2.2 编译"></a>2.2 编译</h2><p>执行 $\color{HotPink}{python demo.py}$ 后，将会启动 Python 的解释器，然后将 demo.py 编译成一个字节码对象 PyCodeObject。</p>
+<h2 id="2-2-编译"><a href="#2-2-编译" class="headerlink" title="2.2 编译"></a>2.2 编译</h2><p>执行 <font color="#FF0000">python demo.py</font> 后，将会启动 Python 的解释器，然后将 demo.py 编译成一个字节码对象 PyCodeObject。</p>
 <p>有的人可能会很好奇，编译的结果不应是 pyc 文件吗，就像 Java 的 class 文件，那为什么是一个对象呢，这里稍微解释一下。</p>
 <blockquote>
 <p>在 Python 的世界中，一切都是对象，函数也是对象，类型也是对象，类也是对象（类属于自定义的类型，在 Python 2.2 之前，int, dict 这些内置类型与类是存在不同的，在之后才统一起来，全部继承自 object），甚至连编译出来的字节码也是对象，.pyc 文件是字节码对象（PyCodeObject）在硬盘上的表现形式。</p>
 </blockquote>
-<p>在运行期间，编译结果也就是 PyCodeObject 对象，只会存在于内存中，而当这个模块的 Python 代码$\color{HotPink}{执行完}$后，就会将编译结果保存到了 pyc 文件中，这样下次就不用编译，直接加载到内存中。pyc 文件只是 PyCodeObject 对象在硬盘上的表现形式。</p>
+<p>在运行期间，编译结果也就是 PyCodeObject 对象，只会存在于内存中，而当这个模块的 Python 代码<font color="#FF0000">执行完</font>后，就会将编译结果保存到了 pyc 文件中，这样下次就不用编译，直接加载到内存中。pyc 文件只是 PyCodeObject 对象在硬盘上的表现形式。</p>
 <p>这个 PyCodeObject 对象包含了 Python 源代码中的字符串，常量值，以及通过语法解析后编译生成的字节码指令。PyCodeObject 对象还会存储这些字节码指令与原始代码行号的对应关系，这样当出现异常时，就能指明位于哪一行的代码。</p>
 <h2 id="2-3-pyc-文件"><a href="#2-3-pyc-文件" class="headerlink" title="2.3 pyc 文件"></a>2.3 pyc 文件</h2><p>一个 pyc 文件包含了三部分信息：Python 的 magic number、pyc 文件创建的时间信息，以及 PyCodeObject 对象。</p>
 <p>magic number 是 Python 定义的一个整数值。一般来说，不同版本的 Python 实现都会定义不同的 magic number，这个值是用来保证 Python 兼容性的。比如要限制由低版本编译的 pyc 文件不能让高版本的 Python 程序来执行，只需要检查 magic number 不同就可以了。由于不同版本的 Python 定义的字节码指令可能会不同，如果不做检查，执行的时候就可能出错。</p>
@@ -372,7 +372,7 @@
 <h2 id="2-4-字节码指令"><a href="#2-4-字节码指令" class="headerlink" title="2.4 字节码指令"></a>2.4 字节码指令</h2><blockquote>
 <p>为什么 pyc 文件也称作字节码文件？因为这些文件存储的都是一些二进制的字节数据，而不是能让人直观查看的文本数据。</p>
 </blockquote>
-<p>Python 标准库提供了用来生成代码对应字节码的工具 $\color{HotPink}{dis}$。dis 提供一个名为 dis 的方法，这个方法接收一个 code 对象，然后会输出 code 对象里的字节码指令信息。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">s = <span class="keyword">open</span>(<span class="string">'demo.py'</span>).<span class="keyword">read</span>()</div><div class="line"><span class="keyword">co</span> = compile(s, <span class="string">'demo.py'</span>, <span class="string">'exec'</span>)</div><div class="line">import dis</div><div class="line">dis.dis(<span class="keyword">co</span>)</div></pre></td></tr></table></figure></p>
+<p>Python 标准库提供了用来生成代码对应字节码的工具 <font color="#FF0000">dis</font>。dis 提供一个名为 dis 的方法，这个方法接收一个 code 对象，然后会输出 code 对象里的字节码指令信息。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">s = <span class="keyword">open</span>(<span class="string">'demo.py'</span>).<span class="keyword">read</span>()</div><div class="line"><span class="keyword">co</span> = compile(s, <span class="string">'demo.py'</span>, <span class="string">'exec'</span>)</div><div class="line">import dis</div><div class="line">dis.dis(<span class="keyword">co</span>)</div></pre></td></tr></table></figure></p>
 <p>执行上面这段代码可以输出 demo.py 编译后的字节码指令</p>
 <pre><code> 1           0 LOAD_CONST               0 (-1)
              3 LOAD_CONST               1 (None)
@@ -413,8 +413,8 @@
             79 JUMP_FORWARD             0 (to 82)
        &gt;&gt;   82 LOAD_CONST               1 (None)
             85 RETURN_VALUE
-</code></pre><p>2.5 Python 虚拟机<br>demo.py 被编译后，接下来的工作就交由 Python 虚拟机来执行字节码指令了。Python 虚拟机会从编译得到的 PyCodeObject 对象中依次读入每一条字节码指令，并在当前的$\color{HotPink}{上下文环境}$中执行这条字节码指令。我们的程序就是通过这样循环往复的过程才得以执行。</p>
-<p>2.6 import 指令<br>demo.py 的第一行代码是 $\color{HotPink}{import foo}$。import 指令用来载入一个模块，另外一个载入模块的方法是 $\color{HotPink}{from xx import yy}$。用 from 语句的好处是，可以只复制需要的符号变量到当前的命名空间中（关于命名空间将在后面介绍）。</p>
+</code></pre><p>2.5 Python 虚拟机<br>demo.py 被编译后，接下来的工作就交由 Python 虚拟机来执行字节码指令了。Python 虚拟机会从编译得到的 PyCodeObject 对象中依次读入每一条字节码指令，并在当前的<font color="#FF0000">上下文环境</font>中执行这条字节码指令。我们的程序就是通过这样循环往复的过程才得以执行。</p>
+<p>2.6 import 指令<br>demo.py 的第一行代码是 <font color="#FF0000">import foo</font>。import 指令用来载入一个模块，另外一个载入模块的方法是 <font color="#FF0000">from xx import yy</font>。用 from 语句的好处是，可以只复制需要的符号变量到当前的命名空间中（关于命名空间将在后面介绍）。</p>
 <p>前文提到，当已经存在 pyc 文件时，就可以直接载入而省去编译过程。但是代码文件的内容会更新，如何保证更新后能重新编译而不入旧的 pyc 文件呢。答案就在 pyc 文件中存储的创建时间信息。当执行 import 指令的时候，如果已存在 pyc 文件，Python 会检查创建时间是否晚于代码文件的修改时间，这样就能判断是否需要重新编译，还是直接载入了。如果不存在 pyc 文件，就会先将 py 文件编译。</p>
 <p>2.7 绝对引入和相对引入<br>前文已经介绍了 $\color{HotPink}{import foo}$ 这行代码。这里隐含了一个问题，就是 $\color{HotPink}{foo}$ 是什么，如何找到 $\color{HotPink}{foo}$。这就属于 Python 的模块引入规则，这里不展开介绍，可以参考 pep-0328。</p>
 <p>2.8 赋值语句<br>接下来，执行到 a = [1, ‘python’]，这是一条赋值语句，定义了一个变量 a，它对应的值是 [1, ‘python’]。这里要解释一下，变量是什么呢？</p>
