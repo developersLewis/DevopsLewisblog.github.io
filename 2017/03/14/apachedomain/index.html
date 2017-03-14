@@ -87,15 +87,16 @@
 
 
 
-<meta name="description" content="devopslewis@outlook.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lewis's Home">
-<meta property="og:url" content="http://developersLewis.github.io/categories/Apache文档总结/index.html">
+<meta name="description" content="正常情况下，根本就没有必要记录这一项，毕竟咱们大都根据虚拟主机来设置相应的访问日志，但也有个别的情况，比如ServerName *.abc.com这样泛解析的形式，所以有必要记录一下用户请求的域名到底是哪个。而apache的LogFormat 中正好有一项值满足了这个需求。即 %V  这里是大写的V ,小写的v 记录的是咱们在虚拟主机中设置的ServerName ，这个的确是没有必要记录的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apache日志记录客户端请求的域名">
+<meta property="og:url" content="http://developersLewis.github.io/2017/03/14/apachedomain/index.html">
 <meta property="og:site_name" content="Lewis's Home">
-<meta property="og:description" content="devopslewis@outlook.com">
+<meta property="og:description" content="正常情况下，根本就没有必要记录这一项，毕竟咱们大都根据虚拟主机来设置相应的访问日志，但也有个别的情况，比如ServerName *.abc.com这样泛解析的形式，所以有必要记录一下用户请求的域名到底是哪个。而apache的LogFormat 中正好有一项值满足了这个需求。即 %V  这里是大写的V ,小写的v 记录的是咱们在虚拟主机中设置的ServerName ，这个的确是没有必要记录的。">
+<meta property="og:updated_time" content="2017-03-14T02:33:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lewis's Home">
-<meta name="twitter:description" content="devopslewis@outlook.com">
+<meta name="twitter:title" content="apache日志记录客户端请求的域名">
+<meta name="twitter:description" content="正常情况下，根本就没有必要记录这一项，毕竟咱们大都根据虚拟主机来设置相应的访问日志，但也有个别的情况，比如ServerName *.abc.com这样泛解析的形式，所以有必要记录一下用户请求的域名到底是哪个。而apache的LogFormat 中正好有一项值满足了这个需求。即 %V  这里是大写的V ,小写的v 记录的是咱们在虚拟主机中设置的ServerName ，这个的确是没有必要记录的。">
 
 
 
@@ -123,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://developersLewis.github.io/categories/Apache文档总结/"/>
+  <link rel="canonical" href="http://developersLewis.github.io/2017/03/14/apachedomain/"/>
 
 
 
 
 
-  <title> 分类: Apache文档总结 | Lewis's Home </title>
+  <title> apache日志记录客户端请求的域名 | Lewis's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,7 +155,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -238,271 +239,170 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        Apache文档总结
-        <small>分类</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/14/apachelogscut/" itemprop="url">
-              
-                <span itemprop="name">Apache日志切割</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-14T10:34:55+08:00"
-              content="2017-03-14" >
-          03-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/14/apachedomain/" itemprop="url">
-              
-                <span itemprop="name">apache日志记录客户端请求的域名</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-14T10:32:31+08:00"
-              content="2017-03-14" >
-          03-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/14/logjust/" itemprop="url">
-              
-                <span itemprop="name">apache只记录指定URI的日志</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-14T10:29:49+08:00"
-              content="2017-03-14" >
-          03-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/14/realiplog/" itemprop="url">
-              
-                <span itemprop="name">Apache日志中记录代理IP以及真实客户端IP</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-14T09:04:48+08:00"
-              content="2017-03-14" >
-          03-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/13/centos6installhttpd24/" itemprop="url">
-              
-                <span itemprop="name">编译安装httpd-2.4</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-13T09:34:10+08:00"
-              content="2017-03-13" >
-          03-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/10/donotrmberlogs/" itemprop="url">
-              
-                <span itemprop="name">LAMP架构（4）Apache不记录指定类型日志</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-10T14:09:33+08:00"
-              content="2017-03-10" >
-          03-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/10/lamp2yonghurenzhen/" itemprop="url">
-              
-                <span itemprop="name">LAMP架构(3)Apache用户认证</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-10T10:55:51+08:00"
-              content="2017-03-10" >
-          03-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/09/lamp3mpm/" itemprop="url">
-              
-                <span itemprop="name">LAMP架构(2)MPM工作模式</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-09T16:54:06+08:00"
-              content="2017-03-09" >
-          03-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/09/lamp1bianyianzhuang/" itemprop="url">
-              
-                <span itemprop="name">LAMP架构(1)编译安装</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-09T13:22:07+08:00"
-              content="2017-03-09" >
-          03-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://developersLewis.github.io/2017/03/14/apachedomain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lewis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lewis's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                apache日志记录客户端请求的域名
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T10:32:31+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Apache文档总结/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache文档总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>正常情况下，根本就没有必要记录这一项，毕竟咱们大都根据虚拟主机来设置相应的访问日志，但也有个别的情况，比如<br>ServerName *.abc.com<br>这样泛解析的形式，所以有必要记录一下用户请求的域名到底是哪个。<br>而apache的LogFormat 中正好有一项值满足了这个需求。<br>即 %V  这里是大写的V ,小写的v 记录的是咱们在虚拟主机中设置的ServerName ，这个的确是没有必要记录的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/14/logjust/" rel="next" title="apache只记录指定URI的日志">
+                <i class="fa fa-chevron-left"></i> apache只记录指定URI的日志
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/14/apachelogscut/" rel="prev" title="Apache日志切割">
+                Apache日志切割 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -510,6 +410,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -688,6 +592,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
