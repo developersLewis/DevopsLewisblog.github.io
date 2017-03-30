@@ -1,0 +1,718 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="/etc/fstab这个文件的所有参数，这个文件是非常重要的。这个文件是配置文件系统的体系，创建的所有分区，都必须写在这个文件里面，否则下次启动的时候你的分区是挂不起来的。
+mount –a 命令这个命令会重启读取/etc/fstab这个文件，可以使用mount –a命令挂载/etc/fstab中所有的文件系统。做一个小实验，来验证一下
+
+首先吧/dev/sda7给卸载掉123456789101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="/etc/fstab分区表详解">
+<meta property="og:url" content="http://developersLewis.github.io/2017/03/30/fstab/index.html">
+<meta property="og:site_name" content="Lewis's Home">
+<meta property="og:description" content="/etc/fstab这个文件的所有参数，这个文件是非常重要的。这个文件是配置文件系统的体系，创建的所有分区，都必须写在这个文件里面，否则下次启动的时候你的分区是挂不起来的。
+mount –a 命令这个命令会重启读取/etc/fstab这个文件，可以使用mount –a命令挂载/etc/fstab中所有的文件系统。做一个小实验，来验证一下
+
+首先吧/dev/sda7给卸载掉123456789101">
+<meta property="og:updated_time" content="2017-03-30T08:47:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="/etc/fstab分区表详解">
+<meta name="twitter:description" content="/etc/fstab这个文件的所有参数，这个文件是非常重要的。这个文件是配置文件系统的体系，创建的所有分区，都必须写在这个文件里面，否则下次启动的时候你的分区是挂不起来的。
+mount –a 命令这个命令会重启读取/etc/fstab这个文件，可以使用mount –a命令挂载/etc/fstab中所有的文件系统。做一个小实验，来验证一下
+
+首先吧/dev/sda7给卸载掉123456789101">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://developersLewis.github.io/2017/03/30/fstab/"/>
+
+
+
+
+
+  <title> /etc/fstab分区表详解 | Lewis's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lewis's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">MY NAME IS LEWIS,AND I AM YOUR GOD.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://developersLewis.github.io/2017/03/30/fstab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lewis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lewis's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                /etc/fstab分区表详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-30T16:39:31+08:00">
+                2017-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux基础文档/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux基础文档</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>/etc/fstab这个文件的所有参数，这个文件是非常重要的。这个文件是配置文件系统的体系，创建的所有分区，都必须写在这个文件里面，否则下次启动的时候你的分区是挂不起来的。</p>
+<h1 id="mount-–a-命令"><a href="#mount-–a-命令" class="headerlink" title="mount –a 命令"></a>mount –a 命令</h1><p>这个命令会重启读取/etc/fstab这个文件，可以使用mount –a命令挂载/etc/fstab中所有的文件系统。做一个小实验，来验证一下</p>
+</blockquote>
+<p>首先吧/dev/sda7给卸载掉<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# umount /dev/sda7</div><div class="line">[root@localhost ~]# df</div><div class="line">Filesystem           <span class="number">1</span>K-blocks      Used       Available        Use%       Mounted on</div><div class="line">/dev/sda3               <span class="number">4061572</span>    <span class="number">2589456</span>    <span class="number">1262468</span>          <span class="number">68</span>%              /</div><div class="line">/dev/sda6               <span class="number">505604</span>      <span class="number">10545</span>        <span class="number">468955</span>         <span class="number">3</span>%              /home</div><div class="line">/dev/sda2               <span class="number">4061572</span>    <span class="number">1799208</span>    <span class="number">2052716</span>          <span class="number">47</span>%             /var</div><div class="line">/dev/sda1               <span class="number">101086</span>      <span class="number">13588</span>        <span class="number">82279</span>          <span class="number">15</span>%             /boot</div><div class="line">tmpfs                   <span class="number">192132</span>         <span class="number">0</span>             <span class="number">192132</span>     <span class="number">0</span>%              /dev/shm</div><div class="line">[root@localhost ~]#</div><div class="line">/dev/sda7这个分区被成功卸载了</div><div class="line">然后再/etc/fstab这个文件里面手动的添加这样一行</div><div class="line">/dev/sda7             /mnt              ext3    defaults       <span class="number">0</span>  <span class="number">0</span></div><div class="line">~ </div><div class="line">最后在使用mount  -a  这个命令</div><div class="line">[root@localhost ~]# mount -a</div><div class="line">[root@localhost ~]# df -h</div><div class="line">Filesystem            Size       Used     Avail      Use%    Mounted on</div><div class="line">/dev/sda3              <span class="number">3.9</span>G     <span class="number">2.5</span>G      <span class="number">1.3</span>G       <span class="number">68</span>%         /</div><div class="line">/dev/sda6              <span class="number">494</span>M   <span class="number">11</span>M      <span class="number">458</span>M      <span class="number">3</span>%          /home</div><div class="line">/dev/sda2              <span class="number">3.9</span>G     <span class="number">1.8</span>G      <span class="number">2.0</span>G       <span class="number">47</span>%        /var</div><div class="line">/dev/sda1              <span class="number">99</span>M     <span class="number">14</span>M       <span class="number">81</span>M       <span class="number">15</span>%       /boot</div><div class="line">tmpfs                  <span class="number">188</span>M     <span class="number">0</span>           <span class="number">188</span>M      <span class="number">0</span>%        /dev/shm</div><div class="line">/dev/sda7              <span class="number">471</span>M   <span class="number">18</span>M       <span class="number">405</span>M      <span class="number">5</span>%        /mnt</div><div class="line">[root@localhost ~]#</div><div class="line">/dev/sda7又被重新的挂载到/mnt下面了</div></pre></td></tr></table></figure></p>
+<h1 id="etc-fstab这个文件中每个参数的含义"><a href="#etc-fstab这个文件中每个参数的含义" class="headerlink" title="/etc/fstab这个文件中每个参数的含义"></a>/etc/fstab这个文件中每个参数的含义</h1><p>来学习一下/etc/fstab这个文件的每个参数是什么意思<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">LABEL=/                          /                      ext3              defaults         <span class="number">1</span> <span class="number">1</span></div><div class="line">LABEL=/home                 /home               ext3             defaults         <span class="number">1</span> <span class="number">2</span></div><div class="line">LABEL=/var                    /var                   ext3             defaults         <span class="number">1</span> <span class="number">2</span></div><div class="line">LABEL=/boot                 /boot                 ext3             defaults         <span class="number">1</span> <span class="number">2</span></div><div class="line">tmpfs                               /dev/shm            tmpfs           defaults         <span class="number">0</span> <span class="number">0</span></div><div class="line">devpts                             /dev/pts             devpts  gid=<span class="number">5</span>,mode=<span class="number">620</span>  <span class="number">0</span> <span class="number">0</span></div><div class="line">sysfs                                /sys                   sysfs            defaults          <span class="number">0</span> <span class="number">0</span></div><div class="line">proc                                /proc                 proc            defaults          <span class="number">0</span> <span class="number">0</span></div><div class="line">LABEL=SWAP-sda5     swap                 swap           defaults          <span class="number">0</span> <span class="number">0</span> /dev/sda7                         /mnt                  ext3            defaults          <span class="number">0</span> <span class="number">0</span></div><div class="line">~</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参数的解释<br>LBAEL=/            是指用卷标的方式来表示，也可以用设备名。如/dev/sda7<br>/                  这个是指挂载点<br>Ext3，swap         这些都是文件系统的类型<br>Default            这个是最重要，这个default里面包含五个参数。<br>1   1              后面的1代表最先扫描，最先起来<br>1   2              后面的2代表优先级低一点，最后起来<br>0   0              后面的0代表忽略启动，计算机启动时不会读这个文件系统<br>可以看到根分区的是1，是因为系统启动的时候，根分区是肯定要起来的，如果根分区不起来，其他分区起来是没有意义的。而后面的0，忽略启动时因为后面的分区起不起来也没有太大关系，不会影响计算机的启动，如果将后面的分区也设为1，那么一旦后面分区坏了，或者被删除了，系统就起不来了。所以我们的普通分区一般设置为0.<br>关于ext3的默认选项<br>也就是刚才在/etc/fstab那个default里面包含的五个参数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rw     suid      dev     <span class="built_in">exec</span>    sync</div></pre></td></tr></table></figure></p>
+<p>default其实里面就包含了这五个参数。<br>下面就来解释一下这五个参数是什么意思和他们对应的是那些参数,<br>Rw        可读可写<br>ro            只读<br>Suid        suid功能<br>nosuid      没有suid功能<br>Dev         nodev     </p>
+<p>挂载设备文件    不可以挂载设备文件<br>Sync         nosync<br>acl功能      没有acl功能<br>Exec         noexec<br>执行功能        不可以执行<br>这些default里面参数的对应关系，而default默认就有前面的那五个参数了，如果想改变这些参数，就需要到/etc/fstab这个文件里面的default后面加上你要改变的参数<br>现在针对这五个参数来做实验，具体的了解一下这五个参数的含义<br>第一个参数是rw    将它改成ro<br>先看一下的文件系统是不是可读可写（这个是默认的）<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># cd /mnt/</span></div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta"># mkdir file</span></div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta"># ls</span></div><div class="line">file</div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta">#</span></div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>可以看到，文件系统是可读可写的。下面将文件系统改为ro<br>在/etc/fstab文件中添加这样一行，<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/dev/sda7               /mnt                    ext3    defaults,ro        <span class="number">0</span> <span class="number">0</span></div></pre></td></tr></table></figure></p>
+<p>文件系统改为ro了，但是并不能够立即生效，必须等到下次重启的时候才会生效，可以敲一条命令，让其立即生效<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[root<span class="meta">@localhost</span> ~]<span class="comment"># mount –o remount /dev/sda7</span></div><div class="line">这条命令可以让刚才做的操作立即生效。</div><div class="line">在使用mount命令来查询一下/dev/sda7是否变成只读了。</div><div class="line">[root<span class="meta">@localhost</span> ~]<span class="comment"># mount | grep /dev/sda7</span></div><div class="line">/dev/sda7 on /mnt type ext3 (ro)</div><div class="line">[root<span class="meta">@localhost</span> ~]<span class="comment">#</span></div><div class="line">已经看到了/dev/sda7已经变成ro了</div><div class="line">[root<span class="meta">@localhost</span> ~]<span class="comment"># cd /mnt/</span></div><div class="line">[root<span class="meta">@localhost</span> mnt]<span class="comment"># mkdir file1</span></div><div class="line">mkdir: cannot create directory `file1': Read-only file system</div><div class="line">[root<span class="meta">@localhost</span> mnt]<span class="comment">#</span></div><div class="line">可以看到，当再次进入/mnt下面建立目录的时候，他就提示这是一个只读的文件。</div></pre></td></tr></table></figure></p>
+<p>第二个参数suid   将它改成no suid<br>在正常情况下面，普通用户是可以改变自己的密码的。我们试一下<br>[root@localhost ~]# su - user1<br>[user1@localhost ~]$ passwd<br>Changing password for user user1.<br>Changing password for user1<br>(current) UNIX password:<br>New UNIX password:<br>Retype new UNIX password:<br>passwd: all authentication tokens updated successfully.<br>[user1@localhost ~]$<br>普通用户的确是可以改变自己的密码的，接下来，在/etc/fstab这个文件里面添加一行内容。<br>LABEL=/                 /            ext3    defaults,nosuid        1 1<br>同样的，使用命令将其立即生效。<br>[root@localhost ~]# mount -o remount /<br>[root@localhost ~]# mount |grep /dev/sda3<br>/dev/sda3 on / type ext3 (rw,nosuid)<br>[root@localhost ~]#<br>可以看到，的根文件系统已经有了一个nosuid的参数了<br>同样的，在切换到普通用户，修改自己的密码<br>[root@localhost ~]# su - user1<br>[user1@localhost ~]$ passwd<br>Changing password for user user1.<br>Changing password for user1<br>(current) UNIX password:<br>passwd: Authentication token manipulation error<br>[user1@localhost ~]$<br>看到了，没有suid，一个普通用户是无法改变自己的密码嘚。因为根文件系统没有suid的功能，普通用户没有办法写到/etc/shadaw里面去</p>
+<p>第三个参数是exec，将它换成noexec<br>默认情况下，在linux系统，的脚本只要有执行权限，都是可以被执行的，<br>[root@localhost ~]# cd /mnt/<br>[root@localhost mnt]# ls<br>shell<br>[root@localhost mnt]# ./shell<br>shell is A<br>shell is B<br>shell is C<br>[root@localhost mnt]#<br>看到这个脚本是可以被执行的，<br>现在我给/mnt加上一个noexec的参数<br>看下在/mnt里面的脚本还可不可以被执行。<br>在/etc/fstab这个文件里面加入这样的一行，<br>/dev/sda7               /mnt           ext3    defaults,noexec        0 0<br>~<br>还是要使用mount –o remount /mnt来让刚才的操作立即生效。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># mount -o remount /mnt</span></div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">#</span></div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># cd /mnt/</span></div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta"># ls</span></div><div class="line">shell</div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta"># ./shell</span></div><div class="line">bash: ./shell: /bin/sh: bad interpreter: Permission denied</div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta">#</span></div></pre></td></tr></table></figure></p>
+<p>看到了，脚本将不能够运行，这个因为文件系统没有了执行功能，所以我脚本就不能运行了。</p>
+<p>第四个参数dev，将它改成nodev<br>在linux系统中，默认情况下，光盘是可以通过计算机的光驱的，但是如果加入了nodev  光盘就将挂不起来。</p>
+<p>下面在来学习一下怎么在linux下面怎么挂载一个iso文件系统<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># mount -o loop boot.iso /media/</span></div><div class="line">[root@localhost ~]<span class="comment"># df</span></div><div class="line">Filesystem            1K-blocks      Used        Available      Use%       Mounted on</div><div class="line">/dev/sda3             <span class="number"> 4061572 </span>    <span class="number"> 2598728 </span>  <span class="number"> 1253196 </span>      68%            /</div><div class="line">/dev/sda6              <span class="number"> 505604 </span>     <span class="number"> 10565 </span>      <span class="number"> 468935 </span>        3%              /home</div><div class="line">/dev/sda2              <span class="number"> 4061572 </span>   <span class="number"> 1936516 </span> <span class="number"> 1915408 </span>       51%            /var</div><div class="line">/dev/sda1              <span class="number"> 101086 </span>    <span class="number"> 13588 </span>       <span class="number"> 82279 </span>          15%            /boot</div><div class="line">tmpfs                    <span class="number"> 192132 </span>       <span class="number"> 0 </span>            <span class="number"> 192132 </span>         0%              /dev/shm</div><div class="line">/dev/sda7              <span class="number"> 482214 </span>   <span class="number"> 19600 </span>        <span class="number"> 412816 </span>         5%             /mnt</div><div class="line">df: `/media/RHEL_5.4 i386 DVD': No such file or directory</div><div class="line">/root/boot.iso        <span class="number"> 9028 </span>    <span class="number"> 9028 </span>              <span class="number"> 0 </span>                 100%           /media</div><div class="line">[root@localhost ~]<span class="comment"># cd /media/</span></div><div class="line">[root@localhost media]<span class="comment"># ls</span></div><div class="line">isolinux  TRANS.TBL</div><div class="line">[root@localhost media]<span class="comment"># cd isolinux/</span></div><div class="line">[root@localhost isolinux]<span class="comment"># ls</span></div><div class="line">boot.cat     initrd.img    memtest      rescue.msg  vmlinuz</div><div class="line">boot.msg     isolinux.bin  options.msg  splash.lss</div><div class="line">general.msg  isolinux.cfg  param.msg    TRANS.TBL</div><div class="line">[root@localhost isolinux]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>这样，iso文件就被挂载到了/media这个目录里面。</p>
+<p>下面在来学习一下在挂载的时候指定一个拥有人和拥有组的<br>这个参数只适合fat32的格式文件系统(dosfstools-2.11-7.el5)<br>首先将/dev/sda7格式化成fat32<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># mkfs.vfat /dev/sda7</span></div><div class="line">mkfs.vfat <span class="number">2.11</span> (<span class="number">12</span> Mar <span class="number">2005</span>)</div><div class="line">[root@localhost ~]<span class="comment">#</span></div><div class="line">已经吧/dev/sda7格式化成了fat32</div><div class="line">[root@localhost ~]<span class="comment"># id user1</span></div><div class="line">uid=<span class="number">500</span>(user1) gid=<span class="number">500</span>(user1) groups=<span class="number">500</span>(user1)</div><div class="line">[root@localhost ~]<span class="comment"># mount -o uid=500,gid=500 /dev/sda7 /mnt/</span></div><div class="line">[root@localhost ~]<span class="comment"># mount |grep /dev/sda7</span></div><div class="line">/dev/sda7 <span class="literal">on</span> /mnt type vfat (rw,uid=<span class="number">500</span>,gid=<span class="number">500</span>)</div><div class="line">[root@localhost ~]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>直接在挂载的时候加了一个uid gid 的参数<br>如果是正常情况，在系统中，以root的身份把一个文件从一个目录复制到另外一个目录，拥有人和拥有组都是root。现在呢<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># cp /etc/fstab /mnt/</span></div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># cd /mnt/</span></div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta"># ll</span></div><div class="line">total <span class="number">8</span></div><div class="line">-rwxr-xr-x <span class="number">1</span> user1 user1 <span class="number">760</span> Feb <span class="number">20</span> <span class="number">01</span>:<span class="number">47</span> fstab</div><div class="line">[root<span class="symbol">@localhost</span> mnt]<span class="meta">#</span></div></pre></td></tr></table></figure></p>
+<p>可以看到，复制过来的文件的拥有人和拥有组已经变成user1了，这个是因为刚才在挂载的时候已经指定了他文件系统的uid和gid</p>
+<p>咱们在来看下面一个问题，怎么去扩展swap分区<br>先来查询一下系统的swap<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># free -m</span></div><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:     <span class="number"> 375 </span>      <span class="number"> 369 </span>        <span class="number"> 6 </span>        <span class="number"> 0 </span>        <span class="number"> 7 </span>        83</div><div class="line">-/+ buffers/cache:  <span class="number"> 278 </span>        97</div><div class="line">Swap:    <span class="number"> 1027 </span>     <span class="number"> 128 </span>       899</div><div class="line">[root@localhost ~]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>现在系统中swap是1024M<br>扩展是swap分区有两种方法，<br>(1)     利用磁盘的剩余空间来扩展swap<br>首先分区并改变分区的类型<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># fdisk /dev/sda</span></div><div class="line"> </div><div class="line">The <span class="built_in">number</span> <span class="keyword">of</span> cylinders <span class="keyword">for</span> this disk <span class="keyword">is</span> <span class="keyword">set</span> <span class="keyword">to</span> <span class="number">1958.</span></div><div class="line">There <span class="keyword">is</span> nothing wrong <span class="keyword">with</span> <span class="keyword">that</span>, <span class="keyword">but</span> this <span class="keyword">is</span> larger than <span class="number">1024</span>,</div><div class="line"><span class="keyword">and</span> could <span class="keyword">in</span> certain setups cause problems <span class="keyword">with</span>:</div><div class="line"><span class="number">1</span>) software <span class="keyword">that</span> runs <span class="keyword">at</span> boot <span class="built_in">time</span> (e.g., old versions <span class="keyword">of</span> LILO)</div><div class="line"><span class="number">2</span>) booting <span class="keyword">and</span> partitioning software <span class="keyword">from</span> other OSs</div><div class="line">   (e.g., DOS FDISK, OS/<span class="number">2</span> FDISK)</div><div class="line"> </div><div class="line">Command (m <span class="keyword">for</span> help): n</div><div class="line">First cylinder (<span class="number">1316</span><span class="number">-1958</span>, default <span class="number">1316</span>):</div><div class="line">Using default value <span class="number">1316</span></div><div class="line">Last cylinder <span class="keyword">or</span> +size <span class="keyword">or</span> +sizeM <span class="keyword">or</span> +sizeK (<span class="number">1316</span><span class="number">-1958</span>, default <span class="number">1958</span>): +<span class="number">500</span>M</div><div class="line"> </div><div class="line">Command (m <span class="keyword">for</span> help): t</div><div class="line">Partition <span class="built_in">number</span> (<span class="number">1</span><span class="number">-8</span>): <span class="number">8</span></div><div class="line">Hex code (type L <span class="keyword">to</span> <span class="built_in">list</span> codes): <span class="number">82</span></div><div class="line">Changed system type <span class="keyword">of</span> partition <span class="number">8</span> <span class="keyword">to</span> <span class="number">82</span> (Linux swap / Solaris)</div><div class="line"> </div><div class="line">Command (m <span class="keyword">for</span> help): wq</div></pre></td></tr></table></figure></p>
+<p>格式化swap<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># mkswap /dev/sda8</span></div><div class="line">Setting up swapspace version 1, size =<span class="number"> 509927 </span>kB</div><div class="line">[root@localhost ~]<span class="comment">#</span></div><div class="line">启动swap</div><div class="line">[root@localhost ~]<span class="comment"># swapon /dev/sda8</span></div><div class="line">[root@localhost ~]<span class="comment">#</span></div><div class="line">现在我在查询一下swap的大小</div><div class="line">[root@localhost ~]<span class="comment"># free -m</span></div><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:     <span class="number"> 375 </span>      <span class="number"> 369 </span>        <span class="number"> 6 </span>        <span class="number"> 0 </span>        <span class="number"> 7 </span>        82</div><div class="line">-/+ buffers/cache: <span class="number"> 278 </span>        96</div><div class="line">Swap:    <span class="number"> 1513 </span>    <span class="number"> 128 </span>       1385</div><div class="line">[root@localhost ~]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>可以看到的swap分区已经增大了500M<br>最后，要想下次系统重启生效，必须写在/etc/fstab文件中<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/dev/sda8               <span class="keyword">swap</span>               <span class="keyword">swap</span>    defaults        <span class="number">0</span> <span class="number">0</span></div><div class="line">~</div></pre></td></tr></table></figure></p>
+<p>(2)     利用分区的剩余空间来扩展swap<br>首先我一样要查询一下系统中swap分区的大小<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># free -m</span></div><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:    <span class="number"> 375 </span>      <span class="number"> 368 </span>        <span class="number"> 7 </span>        <span class="number"> 0 </span>        <span class="number"> 7 </span>        81</div><div class="line">-/+ buffers/cache: <span class="number"> 278 </span>        96</div><div class="line">Swap:    <span class="number"> 1513 </span>    <span class="number"> 128 </span>      1385</div><div class="line">[root@localhost ~]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>然后利用dd工具来创建一个swap文件<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># dd if=/dev/zero of=swapfile bs=1M count=100</span></div><div class="line"><span class="number">100</span>+<span class="number">0</span> records <span class="keyword">in</span></div><div class="line"><span class="number">100</span>+<span class="number">0</span> records out</div><div class="line"><span class="number">104857600</span> bytes (<span class="number">105</span> MB) copied, <span class="number">0.632534</span> seconds, <span class="number">166</span> MB/s</div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">#</span></div><div class="line">格式化swap</div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># mkswap swapfile</span></div><div class="line">Setting up swapspace version <span class="number">1</span>, size = <span class="number">104853</span> kB</div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">#</span></div><div class="line">把这个文件当做一个分区来对待</div><div class="line">启动swap</div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># swapon swapfile</span></div><div class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">#</span></div></pre></td></tr></table></figure></p>
+<p>现在来查询一下swap分区的大小<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># free -m</span></div><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:    <span class="number"> 375 </span>      <span class="number"> 368 </span>        <span class="number"> 6 </span>        <span class="number"> 0 </span>        <span class="number"> 1 </span>        90</div><div class="line">-/+ buffers/cache: <span class="number"> 276 </span>        98</div><div class="line">Swap:    <span class="number"> 1613 </span>    <span class="number"> 128 </span>      1485</div><div class="line">[root@localhost ~]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>可以看到系统的swap分区已经扩大100M</p>
+<p>最后，要想下次系统重启生效，必须写在/etc/fstab文件中<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/swapfile            <span class="keyword">swap</span>                    <span class="keyword">swap</span>    defaults        <span class="number">0</span> <span class="number">0</span></div><div class="line">~</div></pre></td></tr></table></figure></p>
+<p>以上的两种方法就是用来扩展swap分区的<br>还可以使用swapon  -a 激活交换分区，（该命令可以读取/etc/fstab文件，并开启它列出所有的交换条目<br>还可以利用swapon  -s 来查询交换分区的状态<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# swapon -s</div><div class="line">Filename                    Type                Size         Used       Priority</div><div class="line">/dev/sda5                    partition       <span class="number">1052216</span>   <span class="number">131640</span>    <span class="number">-1</span></div><div class="line">/dev/sda8                    partition        <span class="number">497972</span>      <span class="number">0</span>            <span class="number">-2</span></div><div class="line">/root/swapfile                 file             <span class="number">102392</span>       <span class="number">0</span>           <span class="number">-3</span></div><div class="line">[root@localhost ~]#</div></pre></td></tr></table></figure></p>
+<p>在这里，可以看到swap是有哪些文件组成的，还有优先级，数字越大，优先级越高。可以在/etc/fstab文件中default后面加上pri=X（X为优先级）</p>
+<p>在linux系统当中，怎么去挂载一个NFS的网络文件系统呢<br>可以通过showmount  -e  来查看对方计算机有哪些文件夹被共享了<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root<span class="variable">@localhost</span> ~]<span class="comment"># showmount -e 192.168.0.254</span></div><div class="line">Export list <span class="keyword">for</span> <span class="number">192.168</span>.<span class="number">0</span>.<span class="number">254</span>:</div><div class="line"><span class="regexp">/var/ftp</span><span class="regexp">/pub 192.168.0.0/</span><span class="number">24</span></div><div class="line">[root<span class="variable">@localhost</span> ~]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>下面来挂载nfs网络资源<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># mount -t nfs 192.168.0.254:/var/ftp/pub/ /mnt/</span></div><div class="line">[root@localhost ~]<span class="comment"># df</span></div><div class="line">Filesystem           1K-blocks      Used       Available     Use%      Mounted on</div><div class="line">/dev/sda3             <span class="number"> 4061572 </span>  <span class="number"> 2309084 </span> <span class="number"> 1542840 </span>      60%           /</div><div class="line">/dev/sda6             <span class="number"> 505604 </span>   <span class="number"> 10565 </span>      <span class="number"> 468935 </span>         3%           /home</div><div class="line">/dev/sda2             <span class="number"> 4061572 </span> <span class="number"> 1857588 </span>  <span class="number"> 1994336 </span>       49%         /var</div><div class="line">/dev/sda1             <span class="number"> 101086 </span>    <span class="number"> 13588 </span>     <span class="number"> 82279 </span>           15%         /boot</div><div class="line">tmpfs                   <span class="number"> 192132 </span>       <span class="number"> 0 </span>          <span class="number"> 192132 </span>          0%          /dev/shm</div><div class="line">/dev/hdc              <span class="number"> 2935370 </span>  <span class="number"> 2935370 </span>   <span class="number"> 0 </span>                 100%        /media/RHEL_5.4 i386 DVD</div><div class="line">192.168.0.254:/var/ftp/pub/</div><div class="line">                          <span class="number"> 4061600 </span>   <span class="number"> 1857600 </span> <span class="number"> 1994336 </span>         49%        /mnt</div><div class="line">[root@localhost ~]<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>Nfs网络资源就被成功挂载到本地了。<br>如果要每次启动的时候都要生效，就必须写在/etc/fstab文件里面<br>192.168.0.254:/var/ftp/pub  /mnt                nfs     defaults        0 0</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/30/sgidsuid/" rel="next" title="文件特殊权限suid,sgid,sticky">
+                <i class="fa fa-chevron-left"></i> 文件特殊权限suid,sgid,sticky
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Lewis" />
+          <p class="site-author-name" itemprop="name">Lewis</p>
+           
+              <p class="site-description motion-element" itemprop="description">devopslewis@outlook.com</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mount-–a-命令"><span class="nav-number">1.</span> <span class="nav-text">mount –a 命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#etc-fstab这个文件中每个参数的含义"><span class="nav-number">2.</span> <span class="nav-text">/etc/fstab这个文件中每个参数的含义</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lewis</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
